@@ -1,0 +1,24 @@
+---
+config:
+  layout: dagre
+---
+flowchart TB
+  c1 --> a2
+  subgraph one [First group]
+    a1 --> a2
+  end
+  subgraph two [Second group]
+    direction LR
+    b1 --> b2
+    subgraph inner [Inner]
+      i1 --> i2
+    end
+    b2 --> i1
+  end
+  subgraph three
+    c1 --> c2
+  end
+  one --> two
+  three --> two
+  two --> c2
+  style two fill:#fde,stroke:#c39

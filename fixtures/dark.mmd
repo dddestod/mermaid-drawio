@@ -1,0 +1,11 @@
+---
+config:
+  theme: dark
+---
+flowchart TD
+  A[Write notes] --> B{Diagram?}
+  B -->|yes| C[Open in draw.io]
+  B -->|no| D[(Save)]
+  subgraph Editor
+    C --> E((Edit))
+  end

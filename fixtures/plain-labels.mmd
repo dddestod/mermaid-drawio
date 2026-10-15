@@ -1,0 +1,12 @@
+---
+config:
+  htmlLabels: false
+  flowchart:
+    htmlLabels: false
+---
+flowchart LR
+  A[Plain SVG text] -->|edge label| B(Second node with a longer label)
+  B --> C{Choice}
+  subgraph G [A subgraph]
+    C --> D[Done]
+  end

@@ -1,0 +1,16 @@
+---
+config:
+  layout: dagre
+---
+flowchart LR
+  A --> B
+  A --- C
+  A -.-> D
+  A ==> E
+  B --o F
+  C --x G
+  D <--> H
+  E -- text on edge --> H
+  F -->|piped label| G
+  G -.->|dotted label| H
+  H --> A

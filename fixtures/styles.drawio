@@ -1,0 +1,41 @@
+<mxfile host="mermaid-drawio">
+  <diagram id="mermaid" name="Page-1">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="edge-L_A_B_0" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#DD3333;strokeWidth=3;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-A" target="node-B">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-L_B_C_0" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-B" target="node-C">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-L_C_D_0" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#339933;strokeWidth=2;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-C" target="node-D">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-L_D_E_0" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-D" target="node-E">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="node-A" value="&lt;div style=&quot;line-height: 1.5&quot;&gt;**Bold** and *italic*&lt;/div&gt;" style="rounded=0;fillColor=#E0F0FF;strokeColor=#1E6BB8;strokeWidth=1;dashed=1;dashPattern=5 5;fixDash=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#0B3D6E;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="1">
+          <mxGeometry x="8" y="56" width="152" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="node-B" value="&lt;div style=&quot;line-height: 1.5&quot;&gt;Line one&lt;br&gt;Line two&lt;/div&gt;" style="rounded=0;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="1">
+          <mxGeometry x="200" y="56" width="152" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="node-C" value="&lt;div style=&quot;line-height: 1.5&quot;&gt;A rather long label that Mermaid will have to wrap onto more than one line&lt;/div&gt;" style="rounded=0;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="1">
+          <mxGeometry x="392" y="8" width="152" height="168" as="geometry" />
+        </mxCell>
+        <mxCell id="node-D" value="D" style="rounded=0;fillColor=#FFE08A;strokeColor=#B8860B;strokeWidth=2;shadow=1;html=1;whiteSpace=wrap;fontColor=#5A3D00;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;fontStyle=1;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="1">
+          <mxGeometry x="584" y="68" width="152" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="node-E" value="&lt;div style=&quot;line-height: 1.5&quot;&gt;Markdown &lt;strong&gt;string&lt;/strong&gt; label&lt;/div&gt;" style="rounded=0;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="1">
+          <mxGeometry x="776" y="56" width="152" height="72" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

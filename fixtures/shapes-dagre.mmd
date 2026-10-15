@@ -1,0 +1,18 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+  rect[Rectangle] --> round(Rounded)
+  round --> stadium([Stadium])
+  stadium --> sub[[Subroutine]]
+  sub --> cyl[(Cylinder)]
+  rect --> circle((Circle))
+  circle --> asym>Asymmetric]
+  asym --> rhombus{Rhombus}
+  rhombus --> hex{{Hexagon}}
+  rect --> para[/Parallelogram/]
+  para --> paraalt[\Parallelogram alt\]
+  paraalt --> trap[/Trapezoid\]
+  trap --> trapalt[\Trapezoid alt/]
+  trapalt --> dbl(((Double circle)))

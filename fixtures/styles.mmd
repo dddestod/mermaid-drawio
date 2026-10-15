@@ -1,0 +1,9 @@
+flowchart LR
+  A["**Bold** and *italic*"] --> B["Line one<br>Line two"]
+  B --> C["A rather long label that Mermaid will have to wrap onto more than one line"]
+  C --> D:::warn
+  D --> E["`Markdown **string** label`"]
+  classDef warn fill:#ffe08a,stroke:#b8860b,stroke-width:2px,color:#5a3d00,font-weight:bold
+  style A fill:#e0f0ff,stroke:#1e6bb8,color:#0b3d6e,stroke-dasharray: 5 5
+  linkStyle 0 stroke:#d33,stroke-width:3px
+  linkStyle 2 stroke:#393,stroke-width:2px

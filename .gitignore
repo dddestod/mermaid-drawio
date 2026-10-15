@@ -1,0 +1,6 @@
+node_modules/
+dist/
+out/
+test-results/
+.vitest-attachments/
+__screenshots__/
