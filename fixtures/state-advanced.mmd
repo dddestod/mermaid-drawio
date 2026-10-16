@@ -1,0 +1,20 @@
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> Review: submit
+  note right of Review: a person checks it
+  state check <<choice>>
+  Review --> check
+  check --> Approved: ok
+  check --> Draft: changes requested
+  state fork1 <<fork>>
+  Approved --> fork1
+  fork1 --> Build
+  fork1 --> Docs
+  state join1 <<join>>
+  Build --> join1
+  Docs --> join1
+  join1 --> Released
+  Build --> Build: retry
+  Build --> Failed: error
+  Failed --> [*]
+  Released --> [*]

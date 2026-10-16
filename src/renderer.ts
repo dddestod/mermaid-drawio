@@ -53,8 +53,12 @@ export interface Diagram {
 export interface Dialect {
   /** Edge paths beyond the shared `path[data-edge='true'], g.edgePaths > path`. */
   edgeSelector?: string;
+  /** Subgraph groups beyond the shared `g.cluster`. */
+  clusterSelector?: string;
   /** A node's DOM id (without the `<svg id>-` prefix) → the diagram's id for it. */
   nodeId(domId: string): string;
+  /** A subgraph's DOM id (without the prefix) → the diagram's id for it. Default: the DOM id. */
+  clusterId?(domId: string): string;
   /** An edge's id → its two ends, when the id names them. */
   endpoints(edgeId: string, byId: Map<string, Vertex>): [Vertex, Vertex] | undefined;
   /** A `marker-start`/`marker-end` URL → draw.io's arrow style for that end. */
@@ -73,12 +77,27 @@ export function readDiagram(svg: SVGSVGElement, dialect: Dialect): Diagram {
     return id;
   };
 
-  const clusters: Vertex[] = Array.from(svg.querySelectorAll<SVGGElement>("g.cluster"), (g) => {
-    const id = stripPrefix(g.id, prefix);
-    const rect = g.querySelector<SVGRectElement>(":scope > rect") ?? g.querySelector<SVGGraphicsElement>("rect, path, polygon");
+  const clusterSelector = ["g.cluster", dialect.clusterSelector].filter(Boolean).join(", ");
+  const clusters: Vertex[] = Array.from(svg.querySelectorAll<SVGGElement>(clusterSelector), (g) => {
+    const domId = stripPrefix(g.id, prefix);
+    const id = dialect.clusterId ? dialect.clusterId(domId) : domId;
+    const rect = g.querySelector<SVGRectElement>("rect.outer") ?? g.querySelector<SVGRectElement>(":scope > rect") ?? g.querySelector<SVGGraphicsElement>("rect, path, polygon");
     if (!rect) return undefined;
     const label = readLabel(g.querySelector(".cluster-label") ?? g, svg);
     const box = boxInRoot(rect, svg);
+    const band = titleBand(g, rect, box, svg);
+    if (band) {
+      // A title band over the body (a composite state): draw.io's swimlane draws the same.
+      const style: Style = [["swimlane", null], ["startSize", num(band.height)]];
+      if (band.footer > 0.5) style.push(["footerSize", num(band.footer)]);
+      style.push(["container", 1], ["collapsible", 0], ["recursiveResize", 0]);
+      if (band.radius > 0) style.push(["rounded", 1], ["absoluteArcSize", 1], ["arcSize", num(band.radius * 2)]);
+      style.push(...shapeColours([rect]), ["swimlaneFillColor", band.fill]);
+      // (A swimlane's title is bold unless told otherwise.)
+      if (!label?.style.some(([k]) => k === "fontStyle")) style.push(["fontStyle", 0]);
+      style.push(...labelStyle(label, box, "cluster"));
+      return { id, cellId: cellId(`cluster-${id}`), kind: "cluster" as const, box, style, label };
+    }
     const style: Style = [["container", 1], ["collapsible", 0], ["recursiveResize", 0], ...shapeColours([rect]), ...labelStyle(label, box, "cluster")];
     const rx = rect instanceof SVGRectElement ? rect.rx.baseVal.value : 0;
     style.unshift(rx > 0 ? ["rounded", 1] : ["rounded", 0]);
@@ -99,7 +118,7 @@ export function readDiagram(svg: SVGSVGElement, dialect: Dialect): Diagram {
       return { id, cellId: cellId(`node-${id}`), kind: "node" as const, box: label.box, style: [["text", null] as Style[number], ...labelStyle(label, label.box, "node")], label };
     }
     const shape = classifyShape(main, svg, parts);
-    const painted = main instanceof SVGGElement ? Array.from(main.querySelectorAll<SVGGraphicsElement>("path, rect, polygon, circle, ellipse")) : parts;
+    const painted = shape.painted ?? (main instanceof SVGGElement ? Array.from(main.querySelectorAll<SVGGraphicsElement>("path, rect, polygon, circle, ellipse")) : parts);
     const style: Style = [...shape.style, ...shapeColours(painted), ...labelStyle(label, shape.box, "node", shape.style.some(([k]) => k === "boundedLbl"))];
     return { id, cellId: cellId(`node-${id}`), kind: "node" as const, box: shape.box, style, label };
   }).filter((v) => v !== undefined);
@@ -144,6 +163,23 @@ export function readDiagram(svg: SVGSVGElement, dialect: Dialect): Diagram {
 }
 
 const area = (b: Box) => b.width * b.height;
+
+/**
+ * A subgraph drawn as an outer box with a differently filled body box below
+ * its label (`rect.outer` + `rect.inner`): the band's height, the strip left
+ * below the body, the corner radius (from CSS, as Mermaid sets it) and the
+ * body's fill.
+ */
+function titleBand(g: SVGGElement, outer: SVGGraphicsElement, box: Box, svg: SVGSVGElement): { height: number; footer: number; radius: number; fill: string } | undefined {
+  const inner = g.querySelector<SVGRectElement>(":scope > rect.inner");
+  if (!inner || !outer.classList.contains("outer")) return undefined;
+  const body = boxInRoot(inner, svg);
+  const height = body.y - box.y;
+  if (height < 1) return undefined;
+  const footer = box.y + box.height - (body.y + body.height);
+  const radius = parseFloat(getComputedStyle(outer).getPropertyValue("rx")) || 0;
+  return { height, footer, radius, fill: drawioColor(resolvePaint(getComputedStyle(inner).fill, inner)).color };
+}
 
 function stripPrefix(id: string, prefix: string): string {
   return prefix && id.startsWith(prefix) ? id.slice(prefix.length) : id;

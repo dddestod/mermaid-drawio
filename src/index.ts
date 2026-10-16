@@ -1,5 +1,5 @@
 /**
- * Mermaid flowchart (as Mermaid rendered it) → editable draw.io diagram.
+ * Mermaid flowchart or state diagram (as Mermaid rendered it) → editable draw.io diagram.
  *
  * Reads the SVG Mermaid already drew, so positions, sizes, colours and labels
  * are what the user saw, not a fresh layout. Pinned to the SVG structure of
@@ -8,6 +8,7 @@
 import { serialize } from "./drawio.ts";
 import { flowchart } from "./flowchart.ts";
 import { readDiagram, type Dialect } from "./renderer.ts";
+import { state } from "./state.ts";
 import { escapeXml } from "./style.ts";
 
 export interface ToDrawioOptions {
@@ -19,13 +20,13 @@ export interface ToDrawioOptions {
 
 export class UnsupportedDiagramError extends Error {}
 
-/** Convert a rendered Mermaid flowchart to a draw.io file (`<mxfile>` XML, uncompressed). */
+/** Convert a rendered Mermaid diagram to a draw.io file (`<mxfile>` XML, uncompressed). */
 export function toDrawio(svg: SVGSVGElement, options: ToDrawioOptions = {}): string {
   const name = escapeXml(options.pageName ?? "Page-1");
   return `<mxfile host="mermaid-drawio">\n  <diagram id="mermaid" name="${name}">\n${indent(toMxGraphModel(svg, options), 4)}\n  </diagram>\n</mxfile>\n`;
 }
 
-/** Convert a rendered Mermaid flowchart to draw.io's `<mxGraphModel>` XML. */
+/** Convert a rendered Mermaid diagram to draw.io's `<mxGraphModel>` XML. */
 export function toMxGraphModel(svg: SVGSVGElement, options: ToDrawioOptions = {}): string {
   return withRendered(svg, () => serialize(readDiagram(svg, dialectFor(svg)), options));
 }
@@ -66,7 +67,8 @@ function withRendered<T>(svg: SVGSVGElement, fn: () => T, host: Element = svg): 
 function dialectFor(svg: SVGSVGElement): Dialect {
   const type = svg.getAttribute("aria-roledescription") ?? "";
   if (/^flowchart/.test(type) || svg.classList.contains("flowchart")) return flowchart;
-  throw new UnsupportedDiagramError(`Only flowcharts are supported (this is "${type || "unknown"}").`);
+  if (type === "stateDiagram") return state;
+  throw new UnsupportedDiagramError(`Only flowcharts and state diagrams are supported (this is "${type || "unknown"}").`);
 }
 
 function indent(s: string, n: number): string {

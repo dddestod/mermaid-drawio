@@ -1,8 +1,8 @@
 # mermaid-drawio
 
-Turn a Mermaid flowchart into an editable draw.io diagram **that looks like the
-one Mermaid drew**: same positions, sizes, shapes, colours, subgraphs, edge
-routes and labels.
+Turn a Mermaid flowchart or state diagram into an editable draw.io diagram
+**that looks like the one Mermaid drew**: same positions, sizes, shapes,
+colours, subgraphs, edge routes and labels.
 
 draw.io can import Mermaid itself, but it lays the source out again with its
 own Mermaid build, its own font and theme, and without HTML labels, so the
@@ -33,7 +33,8 @@ styles). Not in jsdom.
   markup; renders it off-screen for the call.
 - Options: `pageName` (default "Page-1"), `background` (page colour, e.g. for a
   dark theme's light text).
-- Throws `UnsupportedDiagramError` for anything but a flowchart.
+- Throws `UnsupportedDiagramError` for anything but a flowchart or a state
+  diagram (`stateDiagram-v2`).
 
 ## What's kept
 
@@ -46,6 +47,12 @@ styles). Not in jsdom.
   bold/italic/code etc. kept, Mermaid's wrap width and line height, font,
   size and colour. Mermaid's SVG-text labels (`htmlLabels: false`) too.
 - **Subgraphs**: draw.io containers, nested; nodes are their children.
+- **State diagrams**: start dots, end dots (ring and centre dot), fork/join
+  bars, choice diamonds, notes and their dashed links, rounded states, with
+  `classDef` colours. Composite states are draw.io swimlanes (Mermaid's title
+  band, body and bottom strip) with their states as children; concurrency
+  regions (`--`) are dashed containers inside them. Transitions are connected
+  to their states (composites included), self-loops too, with their labels.
 - **Edges**: connected to their nodes, pinned to the exact points Mermaid
   attached them, with Mermaid's route as waypoints. Rounded corners (ELK) →
   `rounded=1`; spline curves (dagre) → `curved=1`. Arrowheads (arrow, circle,
@@ -61,7 +68,13 @@ styles). Not in jsdom.
   (parallelograms), where draw.io insets the label area itself.
 - Gradient borders (Mermaid 12's base and dark themes) become a solid border
   in the gradient's start colour (the theme's `primaryBorderColor`).
-- Flowcharts only, for now.
+- State diagrams: a wrapped note or label may break at a different word, since
+  Mermaid's wrapping counts a trailing space at the end of a line and draw.io's
+  doesn't. The end dot uses draw.io's `centerRadius` (recent draw.io; older
+  versions draw only the ring). Arrowheads touch the state where Mermaid
+  stops them a few pixels short. Concurrency regions have generated ids, so
+  their cell ids change between renders.
+- Flowcharts and state diagrams only, for now (class and ER are next).
 
 ## Mermaid version
 
@@ -77,8 +90,8 @@ Pull requests are currently disabled. If you need a change, feel free to fork it
 
 Not affiliated with or endorsed by JGraph (draw.io) or the Mermaid project.
 
-See the [roadmap](docs/roadmap.md) for which diagram types come next (state,
-then ER and class) and how each is checked. It is a plan, not a commitment.
+See the [roadmap](docs/roadmap.md) for which diagram types come next (ER,
+then class) and how each is checked. It is a plan, not a commitment.
 
 ## Agent skill
 

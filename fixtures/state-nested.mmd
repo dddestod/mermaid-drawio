@@ -1,0 +1,19 @@
+stateDiagram-v2
+  direction LR
+  [*] --> Active
+  state Active {
+    [*] --> Working
+    state Working {
+      [*] --> Step1
+      Step1 --> Step2
+      Step2 --> [*]
+    }
+    Working --> Paused: pause
+    Paused --> Working: resume
+    --
+    [*] --> Monitoring
+    Monitoring --> Monitoring: tick
+  }
+  Active --> Error: fault
+  Error --> Active: retry
+  Error --> [*]

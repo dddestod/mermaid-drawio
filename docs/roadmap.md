@@ -7,7 +7,8 @@ actually rendered into an editable draw.io diagram that looks like it, with
 labels that move with their boxes and edges that stay attached. Editing happens
 in draw.io; this project doesn't try to round-trip edits back to Mermaid.
 
-Today only flowcharts are supported (`UnsupportedDiagramError` for the rest).
+Today flowcharts and state diagrams are supported (`UnsupportedDiagramError`
+for the rest).
 
 ## Why this order
 
@@ -37,7 +38,7 @@ a separate reader. That decides the order more than demand estimates do.
 **Done when** every flowchart `.drawio` fixture is byte-identical, the API is
 unchanged, and `npm test` and `npm run check` pass.
 
-## Step 1: state diagrams
+## Step 1: state diagrams (done)
 
 - New shapes: start and end dots, fork/join bars, choice diamonds, notes.
 - Composite states (and concurrency regions) as draw.io containers. In the

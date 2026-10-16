@@ -1,0 +1,65 @@
+<mxfile host="mermaid-drawio">
+  <diagram id="mermaid" name="Page-1">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cluster-Running" value="Running" style="swimlane;startSize=26;footerSize=4;container=1;collapsible=0;recursiveResize=0;rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;swimlaneFillColor=#FFFFFF;fontStyle=0;html=1;whiteSpace=wrap;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=62.2;spacingRight=62.2;verticalAlign=top;spacingTop=1;" vertex="1" parent="1">
+          <mxGeometry x="8" y="206" width="184" height="217" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-edge2" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="cluster-Running" source="node-Running_start" target="node-Loading">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-edge3" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="cluster-Running" source="node-Loading" target="node-Ready">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="node-Running_start" value="" style="ellipse;fillColor=#333333;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;" vertex="1" parent="cluster-Running">
+          <mxGeometry x="85" y="51" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="node-Loading" value="Loading" style="rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="cluster-Running">
+          <mxGeometry x="24" y="89" width="136" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="node-Ready" value="Ready" style="rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="cluster-Running">
+          <mxGeometry x="24" y="153" width="136" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-edge0" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-root_start" target="node-Idle">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-edge1" value="start" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.3578;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.3514;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;labelBackgroundColor=#EDEDED;" edge="1" parent="1" source="node-Idle" target="cluster-Running">
+          <mxGeometry x="0.0714" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="80.67" y="122" />
+              <mxPoint x="72.67" y="122" />
+            </Array>
+            <mxPoint x="-0.44" y="0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-edge4" value="stop" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.6486;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.6422;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;labelBackgroundColor=#EDEDED;" edge="1" parent="1" source="cluster-Running" target="node-Idle">
+          <mxGeometry x="-0.0714" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="127.33" y="122" />
+              <mxPoint x="119.33" y="122" />
+            </Array>
+            <mxPoint x="-0.38" y="0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-edge5" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=-0.0006;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="cluster-Running" target="node-root_end">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="node-root_start" value="" style="ellipse;fillColor=#333333;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="93" y="8" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="node-Idle" value="Idle" style="rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="32" y="62" width="136" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="node-root_end" value="" style="ellipse;centerRadius=2.5;centerColor=#9370DB;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="93" y="463" width="14" height="14" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

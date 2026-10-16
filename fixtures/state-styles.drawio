@@ -1,0 +1,81 @@
+<mxfile host="mermaid-drawio">
+  <diagram id="mermaid" name="Page-1">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="edge-edge0" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-root_start" target="node-Waiting">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-edge1" value="input" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.3578;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;labelBackgroundColor=#EDEDED;" edge="1" parent="1" source="node-Waiting" target="node-Checking">
+          <mxGeometry x="0.2909" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="148.37" y="122" />
+              <mxPoint x="105.7" y="122" />
+            </Array>
+            <mxPoint x="-0.15" y="0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-edge2" value="invalid" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.6422;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.2868;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;labelBackgroundColor=#EDEDED;" edge="1" parent="1" source="node-Checking" target="node-Rejected">
+          <mxGeometry x="-0.2519" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="125.04" y="541" />
+              <mxPoint x="223" y="541" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-edge3" value="valid" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.3578;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;labelBackgroundColor=#EDEDED;" edge="1" parent="1" source="node-Checking" target="node-Accepted">
+          <mxGeometry x="0.0344" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="86.37" y="290" />
+              <mxPoint x="76" y="290" />
+            </Array>
+            <mxPoint x="-0.05" y="0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-Rejected----note-4-Rejected" value="" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#333333;strokeWidth=1;dashed=1;dashPattern=3 3;fixDash=1;startArrow=none;endArrow=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.7132;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-Rejected----note" target="node-Rejected">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="366.04" y="541" />
+              <mxPoint x="281" y="541" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-edge5" value="retry" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.6422;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;labelBackgroundColor=#EDEDED;" edge="1" parent="1" source="node-Rejected" target="node-Waiting">
+          <mxGeometry x="0.2329" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="252" y="122" />
+              <mxPoint x="187.04" y="122" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-edge6" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=classic;endFill=1;endSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=-0.0002;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-Accepted" target="node-root_end">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="node-root_start" value="" style="ellipse;fillColor=#333333;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="160.7" y="8" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="node-Waiting" value="Waiting for input" style="rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="99.7" y="62" width="136" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="node-Checking" value="&lt;div style=&quot;line-height: 1.5&quot;&gt;Validating the request&lt;/div&gt;" style="rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="37.7" y="206" width="136" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="node-Rejected" value="Rejected" style="rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#FF9966;strokeColor=#CC0000;strokeWidth=2;shadow=1;html=1;whiteSpace=wrap;fontColor=#FFFFFF;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="184" y="561" width="136" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="node-Accepted" value="Accepted" style="rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="8" y="561" width="136" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="node-Rejected----note" value="&lt;div style=&quot;line-height: 1.5&quot;&gt;Shown to the user,&lt;br&gt;with the reason&lt;/div&gt;" style="rounded=0;fillColor=#FFF5AD;strokeColor=#9370DB;strokeWidth=1;html=1;whiteSpace=wrap;fontColor=#000000;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=15;spacingRight=15;" vertex="1" parent="1">
+          <mxGeometry x="291.04" y="385" width="150" height="102" as="geometry" />
+        </mxCell>
+        <mxCell id="node-root_end" value="" style="ellipse;centerRadius=2.5;centerColor=#9370DB;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="69" y="641" width="14" height="14" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

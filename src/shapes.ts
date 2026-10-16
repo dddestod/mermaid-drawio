@@ -5,12 +5,14 @@
  * matches no draw.io shape becomes a polygon with the same outline.
  */
 import { apply, boundsOf, dedupe, simplify, toRoot, type Box, type Point } from "./geometry.ts";
-import { num, type Style } from "./style.ts";
+import { drawioColor, num, resolvePaint, type Style } from "./style.ts";
 
 export interface Shape {
   /** The outline's bounding box in root coordinates: the cell's geometry. */
   box: Box;
   style: Style;
+  /** The parts whose paint the cell takes, when not all of them (default: every painted part). */
+  painted?: SVGGraphicsElement[];
 }
 
 const EPS = 0.02; // in fractions of the box
@@ -44,7 +46,7 @@ export function classifyShape(el: SVGGraphicsElement, root: SVGSVGElement, all: 
   const inner = Array.from(el.querySelectorAll<SVGGraphicsElement>("rect, circle, ellipse, polygon"));
   if (inner.length) return classifyShape(inner[0], root, inner);
   const path = el.querySelector("path");
-  if (path) return outlineShape(sampleOutline(path, toRoot(path, root)));
+  if (path) return bullseye(el, path, root) ?? outlineShape(sampleOutline(path, toRoot(path, root)));
   return { box: boxOf(el, m), style: [["rounded", 0]] };
 }
 
@@ -154,6 +156,29 @@ function sampleOutline(path: SVGPathElement, m: DOMMatrix): Point[] {
   } finally {
     if (sample !== path) sample.remove();
   }
+}
+
+/**
+ * A ring around a smaller filled dot, drawn as paths (a state diagram's end
+ * state): an ellipse with draw.io's centre dot (`centerRadius`, `centerColor`).
+ */
+function bullseye(el: SVGGraphicsElement, ring: SVGPathElement, root: SVGSVGElement): Shape | undefined {
+  const dot = el.querySelector<SVGPathElement>(":scope > g path");
+  if (!dot) return undefined;
+  const outer = outlineShape(sampleOutline(ring, toRoot(ring, root)));
+  // (A circle also fits the stadium template, which is tried first.)
+  const round = outer.style.some(([k, v]) => k === "ellipse" || (k === "arcSize" && v === 50 && Math.abs(outer.box.width - outer.box.height) <= PX));
+  // The dot is too small to tell from a square by its outline: a smaller box on the same centre will do.
+  const dotBox = boxOf(dot, toRoot(dot, root));
+  if (!round || dotBox.width >= outer.box.width * 0.75) return undefined;
+  const c = (b: Box) => ({ x: b.x + b.width / 2, y: b.y + b.height / 2 });
+  if (Math.hypot(c(outer.box).x - c(dotBox).x, c(outer.box).y - c(dotBox).y) > PX) return undefined;
+  const dotFill = drawioColor(resolvePaint(getComputedStyle(dot).fill, dot)).color;
+  return {
+    box: outer.box,
+    style: [["ellipse", null], ["centerRadius", num(dotBox.width / 2)], ["centerColor", dotFill]],
+    painted: Array.from(el.querySelectorAll<SVGGraphicsElement>(":scope > path")),
+  };
 }
 
 /** A sampled outline as the draw.io shape it matches, else as a polygon. */

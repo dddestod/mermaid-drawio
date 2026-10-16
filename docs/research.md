@@ -29,6 +29,19 @@ But it is not *the* rendered layout the user saw:
 So an app's "Open in draw.io" button, sending the `.mmd`, gives a diagram with
 the same structure and a similar shape, but a visibly different one.
 
+For state diagrams (`fixtures/state-*.mmd`) its cells are good: start and end
+dots, fork/join bars, choice diamonds and notes are native shapes, composite
+states are swimlanes with their states as children, and concurrency regions
+are containers. The layout is what differs, more than for flowcharts:
+
+- States shrink to their text, and the whole diagram is laid out again. In
+  `state-nested.mmd` the two regions of `Active` end up side by side at
+  different heights, the initial `[*]` sits below `Active` instead of beside it,
+  and `fault`/`retry` run as long curves to `Active`'s top-left corner, across
+  the container.
+- Notes don't wrap (one long line), and `classDef` colours come through but in
+  its own theme's font and sizes.
+
 ## mmd2pptx (github.com/LJAYi/mmd2pptx, `@mmd2pptx/core` 0.2.4, Apache-2.0)
 
 The closest prior art: it parses Mermaid's rendered SVG into an IR and exports

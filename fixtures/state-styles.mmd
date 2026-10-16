@@ -1,0 +1,15 @@
+stateDiagram-v2
+  classDef bad fill:#f96,stroke:#c00,stroke-width:2px,color:#fff
+  [*] --> Waiting
+  Waiting : Waiting for input
+  Waiting --> Checking: input
+  Checking : Validating the request
+  Checking --> Rejected: invalid
+  Checking --> Accepted: valid
+  class Rejected bad
+  note left of Rejected
+    Shown to the user,
+    with the reason
+  end note
+  Rejected --> Waiting: retry
+  Accepted --> [*]
