@@ -16,6 +16,7 @@ See [SETUP.md](SETUP.md) for installation, dependencies, CLI examples, configura
 and platform support, and [SKILL.md](SKILL.md) for the agent workflow. The full
 workflow is tested on Windows; macOS/Linux discovery is implemented but untested.
 The skill, scripts and examples use the repository's [MIT license](LICENSE).
+Not affiliated with or endorsed by JGraph (draw.io) or the Mermaid project.
 
 ## Examples
 

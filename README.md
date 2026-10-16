@@ -75,6 +75,8 @@ look at the diffs.
 I wrote this for my own use and share it as-is. Bug reports are welcome. I may be slow to reply or may not reply at all.
 Pull requests are currently disabled. If you need a change, feel free to fork it.
 
+Not affiliated with or endorsed by JGraph (draw.io) or the Mermaid project.
+
 See the [roadmap](docs/roadmap.md) for which diagram types come next (state,
 then ER and class) and how each is checked. It is a plan, not a commitment.
 
