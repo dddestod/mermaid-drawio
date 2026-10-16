@@ -4,3 +4,7 @@ out/
 test-results/
 .vitest-attachments/
 __screenshots__/
+
+# Personal notes, kept local
+CLAUDE.local.md
+docs/margin-integration.md
