@@ -1,0 +1,11 @@
+erDiagram
+  CUSTOMER ||--o{ ORDER : places
+  CUSTOMER {
+    string id PK
+    string name
+  }
+  ORDER {
+    int id PK
+    string customerId FK
+    date placed
+  }

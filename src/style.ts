@@ -13,6 +13,9 @@ export function num(n: number): string {
   return Object.is(r, -0) ? "0" : String(r);
 }
 
+/** Four decimals, for fractions (ports, label positions). */
+export const num4 = (n: number) => String(Math.round(n * 10000) / 10000);
+
 interface Rgba {
   r: number;
   g: number;

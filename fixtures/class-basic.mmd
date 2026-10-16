@@ -1,0 +1,15 @@
+classDiagram
+  class Animal {
+    +String name
+    -int age
+    +speak() String
+    +move(int distance) void
+  }
+  class Dog {
+    +fetch() void
+  }
+  class Owner {
+    +String name
+  }
+  Animal <|-- Dog
+  Owner --> Dog : walks

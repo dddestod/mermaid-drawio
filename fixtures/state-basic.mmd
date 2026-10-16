@@ -1,0 +1,9 @@
+stateDiagram-v2
+  [*] --> Idle
+  Idle --> Running: start
+  state Running {
+    [*] --> Loading
+    Loading --> Ready
+  }
+  Running --> Idle: stop
+  Running --> [*]
