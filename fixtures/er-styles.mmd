@@ -1,0 +1,12 @@
+erDiagram
+  p[Person] {
+    string name
+    int age
+  }
+  a["Postal address"] {
+    string street
+  }
+  p ||--o{ a : "lives at"
+  style p fill:#fde68a,stroke:#b45309,stroke-width:2px,color:#78350f
+  classDef soft fill:#dcfce7,stroke:#15803d
+  class a soft

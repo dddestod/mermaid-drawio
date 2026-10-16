@@ -1,0 +1,55 @@
+<mxfile host="mermaid-drawio">
+  <diagram id="mermaid" name="Page-1">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cluster-Geometry" value="Geometry" style="rounded=0;container=1;collapsible=0;recursiveResize=0;fillColor=#FFFFDE;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=192.96;spacingRight=192.96;verticalAlign=top;spacingTop=0;" vertex="1" parent="1">
+          <mxGeometry x="270.09" y="59" width="456.17" height="307.5" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-id_Shape_Square_1" value="" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#333333;strokeWidth=1;dashed=1;dashPattern=3 3;fixDash=1;startArrow=block;startFill=0;startSize=14;endArrow=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.3521;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="cluster-Geometry" source="node-Shape" target="node-Square">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="230.99" y="138" />
+              <mxPoint x="230.99" y="159.1" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="node-Shape" value="&lt;div style=&quot;padding:0 0.5px&quot;&gt;&lt;div style=&quot;box-sizing:border-box;height:72px;padding-top:12px;overflow:hidden;&quot;&gt;&lt;div style=&quot;text-align:center;height:24px;line-height:24px;white-space:nowrap&quot;&gt;«interface»&lt;/div&gt;&lt;div style=&quot;text-align:center;height:24px;line-height:24px;white-space:nowrap&quot;&gt;&lt;b&gt;Shape&lt;/b&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;box-sizing:border-box;height:24px;padding-top:0px;overflow:hidden;border-top:1px solid #9370DB;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;box-sizing:border-box;height:77.5px;padding-top:18px;overflow:hidden;border-top:1px solid #9370DB;&quot;&gt;&lt;div style=&quot;text-align:left;padding-left:11.5px;height:24px;line-height:24px;white-space:nowrap&quot;&gt;&lt;u&gt;+area() : double&lt;/u&gt;&lt;/div&gt;&lt;div style=&quot;text-align:left;padding-left:11.5px;height:24px;line-height:24px;white-space:nowrap&quot;&gt;&lt;i&gt;+draw()&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;overflow=fill;verticalAlign=top;align=left;spacing=0;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;" vertex="1" parent="cluster-Geometry">
+          <mxGeometry x="24" y="51" width="176.99" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="node-Square" value="&lt;div style=&quot;padding:0 0.5px&quot;&gt;&lt;div style=&quot;box-sizing:border-box;height:48px;padding-top:12px;overflow:hidden;&quot;&gt;&lt;div style=&quot;text-align:center;height:24px;line-height:24px;white-space:nowrap&quot;&gt;&lt;b&gt;Square&amp;lt;T&amp;gt;&lt;/b&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;box-sizing:border-box;height:96px;padding-top:12px;overflow:hidden;border-top:1px solid #9370DB;&quot;&gt;&lt;div style=&quot;text-align:left;padding-left:11.5px;height:24px;line-height:24px;white-space:nowrap&quot;&gt;-List&amp;lt;T&amp;gt; points&lt;/div&gt;&lt;div style=&quot;text-align:left;padding-left:11.5px;height:24px;line-height:24px;white-space:nowrap&quot;&gt;&lt;u&gt;+String name&lt;/u&gt;&lt;/div&gt;&lt;div style=&quot;text-align:left;padding-left:11.5px;height:24px;line-height:24px;white-space:nowrap&quot;&gt;#side double&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;box-sizing:border-box;height:47.5px;padding-top:12px;overflow:hidden;border-top:1px solid #9370DB;&quot;&gt;&lt;div style=&quot;text-align:left;padding-left:11.5px;height:24px;line-height:24px;white-space:nowrap&quot;&gt;~internal()&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;overflow=fill;verticalAlign=top;align=left;spacing=0;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;" vertex="1" parent="cluster-Geometry">
+          <mxGeometry x="260.99" y="91.5" width="171.18" height="192" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-edgeNote0" value="" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#333333;strokeWidth=1;dashed=1;dashPattern=2 2;fixDash=1;startArrow=none;endArrow=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.6479;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-note0" target="node-Square">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="501.09" y="296" />
+              <mxPoint x="501.09" y="274.9" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-id_Square_Color_2" value="fill" style="edgeStyle=none;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;startArrow=none;endArrow=open;endFill=0;endSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;labelBackgroundColor=#ECECFF;" edge="1" parent="1" source="node-Square" target="node-Color">
+          <mxGeometry x="0.2633" relative="1" as="geometry">
+            <mxPoint x="0" y="-0.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="node-Empty" value="&lt;div style=&quot;padding:0 1px&quot;&gt;&lt;div style=&quot;box-sizing:border-box;height:48px;padding-top:12px;overflow:hidden;&quot;&gt;&lt;div style=&quot;text-align:center;height:24px;line-height:24px;white-space:nowrap&quot;&gt;&lt;b&gt;Empty&lt;/b&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;box-sizing:border-box;height:18px;padding-top:0px;overflow:hidden;border-top:2px solid #B91C1C;&quot;&gt;&lt;/div&gt;&lt;div style=&quot;box-sizing:border-box;height:17px;padding-top:0px;overflow:hidden;border-top:2px solid #B91C1C;&quot;&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;fillColor=#FEE2E2;strokeColor=#B91C1C;strokeWidth=2;shadow=1;html=1;whiteSpace=wrap;overflow=fill;verticalAlign=top;align=left;spacing=0;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="77.59" y="154" width="72.91" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="node-Color" value="&lt;div style=&quot;padding:0 0.5px&quot;&gt;&lt;div style=&quot;box-sizing:border-box;height:72px;padding-top:12px;overflow:hidden;&quot;&gt;&lt;div style=&quot;text-align:center;height:24px;line-height:24px;white-space:nowrap&quot;&gt;«enumeration»&lt;/div&gt;&lt;div style=&quot;text-align:center;height:24px;line-height:24px;white-space:nowrap&quot;&gt;&lt;b&gt;Color&lt;/b&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;box-sizing:border-box;height:72px;padding-top:12px;overflow:hidden;border-top:1px solid #9370DB;&quot;&gt;&lt;div style=&quot;text-align:left;padding-left:11.5px;height:24px;line-height:24px;white-space:nowrap&quot;&gt;RED&lt;/div&gt;&lt;div style=&quot;text-align:left;padding-left:11.5px;height:24px;line-height:24px;white-space:nowrap&quot;&gt;GREEN&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;box-sizing:border-box;height:23.5px;padding-top:0px;overflow:hidden;border-top:1px solid #9370DB;&quot;&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;overflow=fill;verticalAlign=top;align=left;spacing=0;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="831.38" y="162.5" width="134.28" height="168" as="geometry" />
+        </mxCell>
+        <mxCell id="node-note0" value="Corners are\nalways square" style="rounded=0;fillColor=#FFF5AD;strokeColor=#AAAA33;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#000000;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=6;spacingRight=6;" vertex="1" parent="1">
+          <mxGeometry x="8" y="278" width="212.09" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="node-note1" value="A general note" style="rounded=0;fillColor=#FFF5AD;strokeColor=#AAAA33;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#000000;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=6;spacingRight=6;" vertex="1" parent="1">
+          <mxGeometry x="56.45" y="354" width="115.2" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="title" value="Shapes" style="text;html=1;whiteSpace=wrap;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=0;spacingRight=0;" vertex="1" parent="1">
+          <mxGeometry x="459.69" y="7.89" width="55.65" height="18.82" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

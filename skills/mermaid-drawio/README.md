@@ -2,15 +2,17 @@
 
 One agent skill with two modes:
 
-- **Faithful (default):** convert Mermaid's rendered flowchart directly into
-  editable, uncompressed Draw.io XML, preserving its appearance.
-- **Beautify (explicit):** apply typography, spacing and palettes while keeping
+- **Faithful (default):** convert Mermaid's rendered flowchart, state, ER or
+  class diagram directly into editable, uncompressed Draw.io XML, preserving
+  its appearance.
+- **Beautify (explicit, flowcharts only):** apply typography, spacing and palettes while keeping
   labels, semantic shapes, groups, connections, arrows and dashed links.
 
 Both modes export the final editable `.drawio` through Draw.io desktop and
 require inspection of the resulting PNG. They share the same helper and the
 containing checkout's dependencies. No second clone or fixed Git revision is
-required. Only Mermaid flowcharts are supported.
+required. Beautify supports flowcharts only; faithful mode also takes state,
+ER and class diagrams.
 
 See [SETUP.md](SETUP.md) for installation, dependencies, CLI examples, configuration
 and platform support, and [SKILL.md](SKILL.md) for the agent workflow. The full

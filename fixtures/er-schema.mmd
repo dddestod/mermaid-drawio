@@ -1,0 +1,31 @@
+---
+title: Ordering
+---
+erDiagram
+  direction LR
+  CUSTOMER ||--o{ ORDER : places
+  ORDER ||--|{ LINE-ITEM : contains
+  PRODUCT ||--o{ LINE-ITEM : "ordered in"
+  CUSTOMER }|..|{ DELIVERY-ADDRESS : uses
+  CUSTOMER {
+    string id PK "uuid"
+    string name
+    string email UK "lower-cased"
+  }
+  ORDER {
+    int id PK
+    string customerId FK
+    date placed
+    decimal total
+  }
+  LINE-ITEM {
+    int orderId PK, FK
+    int productId PK, FK
+    int quantity
+  }
+  PRODUCT {
+    int id PK
+    string sku UK
+    string title "shown in search"
+  }
+  DELIVERY-ADDRESS

@@ -1,6 +1,6 @@
 ---
 name: mermaid-drawio
-description: Convert Mermaid flowcharts to editable Draw.io files, or polish existing Draw.io flowcharts. Preserve appearance by default; use visual design judgment when beautification is requested. Export and inspect the final file with Draw.io desktop. Use when a .drawio deliverable is wanted; excludes non-flowchart Mermaid conversion.
+description: Convert Mermaid flowcharts, state, ER and class diagrams to editable Draw.io files, or polish existing Draw.io flowcharts. Preserve appearance by default; use visual design judgment when beautification is requested (flowcharts only). Export and inspect the final file with Draw.io desktop. Use when a .drawio deliverable is wanted; excludes sequence and other Mermaid diagram types.
 ---
 
 # Mermaid to Draw.io
@@ -13,7 +13,9 @@ Resolve `<skill-dir>` from this file's directory, independently of the working
 directory. Use [scripts/diagram.mjs](scripts/diagram.mjs); read [SETUP.md](SETUP.md)
 for dependencies and configuration. It uses the containing checkout and its
 local converter code. A separately copied skill needs `--repo PATH` or equivalent
-configuration. Current Mermaid conversion support is flowcharts only.
+configuration. Faithful conversion supports flowcharts, state diagrams
+(`stateDiagram-v2`), ER and class diagrams; `--mode beautify` supports
+flowcharts only and refuses the others. Other Mermaid types are refused.
 
 ## Establish the presentation scope
 

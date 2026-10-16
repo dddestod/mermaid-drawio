@@ -17,7 +17,8 @@ import {
   type Box,
   type Point,
 } from "./geometry.ts";
-import { readLabel, type Label } from "./labels.ts";
+import { readCompartments } from "./compartments.ts";
+import { readLabel, textLabel, type Label } from "./labels.ts";
 import { classifyShape } from "./shapes.ts";
 import { dashPattern, drawioColor, num, num4, px, resolvePaint, type Style } from "./style.ts";
 
@@ -40,6 +41,8 @@ export interface Edge {
   points: Point[];
   style: Style;
   label?: Label;
+  /** Labels at the ends (a class relation's multiplicities), as children of the edge. */
+  terminals?: Array<{ label: Label; end: "source" | "target" }>;
   parent?: Vertex;
 }
 
@@ -63,6 +66,13 @@ export interface Dialect {
   endpoints(edgeId: string, byId: Map<string, Vertex>): [Vertex, Vertex] | undefined;
   /** A `marker-start`/`marker-end` URL → draw.io's arrow style for that end. */
   marker(url: string | null, end: "start" | "end"): Style;
+  /** Nodes may have rows inside (ER attributes, class members): see compartments.ts. */
+  compartments?: boolean;
+  /**
+   * Edge ends may stop short of their node, where the marker is drawn back
+   * toward it (a class diagram's `-margin` markers): extend them to the node.
+   */
+  snapEnds?: boolean;
 }
 
 export function readDiagram(svg: SVGSVGElement, dialect: Dialect): Diagram {
@@ -119,7 +129,12 @@ export function readDiagram(svg: SVGSVGElement, dialect: Dialect): Diagram {
     }
     const shape = classifyShape(main, svg, parts);
     const painted = shape.painted ?? (main instanceof SVGGElement ? Array.from(main.querySelectorAll<SVGGraphicsElement>("path, rect, polygon, circle, ellipse")) : parts);
-    const style: Style = [...shape.style, ...shapeColours(painted), ...labelStyle(label, shape.box, "node", shape.style.some(([k]) => k === "boundedLbl"))];
+    const colours = shapeColours(painted);
+    // (ER and class outlines carry the "neo" shadow on their group.)
+    if (main instanceof SVGGElement && /drop-shadow/.test(getComputedStyle(main).filter) && !colours.some(([k]) => k === "shadow")) colours.push(["shadow", 1]);
+    const rows = dialect.compartments ? readCompartments(g, shape.box, svg, colours) : undefined;
+    if (rows) return { id, cellId: cellId(`node-${id}`), kind: "node" as const, box: shape.box, style: [...shape.style, ...colours, ...rows.style], label: rows.label };
+    const style: Style = [...shape.style, ...colours, ...labelStyle(label, shape.box, "node", shape.style.some(([k]) => k === "boundedLbl"))];
     return { id, cellId: cellId(`node-${id}`), kind: "node" as const, box: shape.box, style, label };
   }).filter((v) => v !== undefined);
 
@@ -133,6 +148,11 @@ export function readDiagram(svg: SVGSVGElement, dialect: Dialect): Diagram {
     }
     v.parent = best;
   }
+
+  // The diagram's title (`title:` in the front matter), as a text cell.
+  const titleText = svg.querySelector<SVGTextElement>("text[class$='TitleText']");
+  const title = titleText ? textLabel(titleText, svg) : undefined;
+  if (title) nodes.push({ id: "title", cellId: cellId("title"), kind: "node", box: title.box, style: [["text", null], ...labelStyle(title, title.box, "node")], label: title });
 
   const byId = new Map<string, Vertex>();
   for (const v of [...clusters, ...nodes]) if (!byId.has(v.id)) byId.set(v.id, v);
@@ -155,9 +175,29 @@ export function readDiagram(svg: SVGSVGElement, dialect: Dialect): Diagram {
     const ends = dialect.endpoints(id, byId);
     const source = ends?.[0] ?? nearestVertex(points[0], vertices);
     const target = ends?.[1] ?? nearestVertex(points[points.length - 1], vertices);
+    if (dialect.snapEnds) {
+      if (source) points[0] = snapToBox(points[0], points[1], source.box);
+      if (target) points[points.length - 1] = snapToBox(points[points.length - 1], points[points.length - 2], target.box);
+    }
     const label = labels.get(id);
     const style = edgeStyle(path, points, source, target, dialect, label);
     edges.push({ id, cellId: cellId(`edge-${id}`), source, target, points, style, label, parent: commonParent(source, target) });
+  }
+
+  // Labels at an edge's ends aren't tied to it by id: take the nearest end.
+  for (const g of svg.querySelectorAll("g.edgeTerminals")) {
+    const label = readLabel(g, svg);
+    if (!label) continue;
+    const c = center(label.box);
+    let best: { edge: Edge; end: "source" | "target"; d: number } | undefined;
+    for (const edge of edges) {
+      for (const end of ["source", "target"] as const) {
+        const p = end === "source" ? edge.points[0] : edge.points[edge.points.length - 1];
+        const d = Math.hypot(p.x - c.x, p.y - c.y);
+        if (!best || d < best.d) best = { edge, end, d };
+      }
+    }
+    if (best) (best.edge.terminals ??= []).push({ label, end: best.end });
   }
   return { origin, vertices, edges };
 }
@@ -183,6 +223,25 @@ function titleBand(g: SVGGElement, outer: SVGGraphicsElement, box: Box, svg: SVG
 
 function stripPrefix(id: string, prefix: string): string {
   return prefix && id.startsWith(prefix) ? id.slice(prefix.length) : id;
+}
+
+/**
+ * `end` moved on along its last segment (from `from`) to `box`'s border, when
+ * it stops up to 24px short of it; otherwise `end` as it is.
+ */
+function snapToBox(end: Point, from: Point, box: Box): Point {
+  const dx = end.x - from.x;
+  const dy = end.y - from.y;
+  const length = Math.hypot(dx, dy);
+  if (length === 0 || distanceToBoxEdge(end, box) <= 0.5) return end;
+  // The first t ≥ 0 where end + t·(dx, dy)/length is inside the box on both axes.
+  const enter = (p: number, d: number, lo: number, hi: number): [number, number] =>
+    d === 0 ? (p >= lo && p <= hi ? [0, Infinity] : [Infinity, -Infinity]) : [Math.min((lo - p) / d, (hi - p) / d), Math.max((lo - p) / d, (hi - p) / d)];
+  const [x0, x1] = enter(end.x, dx / length, box.x, box.x + box.width);
+  const [y0, y1] = enter(end.y, dy / length, box.y, box.y + box.height);
+  const t = Math.max(x0, y0, 0);
+  if (t > Math.min(x1, y1) || t > 24) return end;
+  return { x: end.x + (dx / length) * t, y: end.y + (dy / length) * t };
 }
 
 function nearestVertex(p: Point, vertices: Vertex[]): Vertex | undefined {
@@ -295,6 +354,8 @@ function port(p: Point, v: Vertex | undefined, which: "exit" | "entry"): Style {
 /** Fill, stroke and shadow from the painted parts of a shape. */
 function shapeColours(parts: SVGGraphicsElement[]): Style {
   const styles = parts.map((p) => getComputedStyle(p));
+  // Drawn but invisible (a class diagram's lollipop interface is only its name).
+  if (styles.length && styles.every((cs) => cs.opacity === "0")) return [["fillColor", "none"], ["strokeColor", "none"]];
   const fills = styles.map((cs, i) => resolvePaint(cs.fill, parts[i]));
   const strokes = styles.map((cs, i) => resolvePaint(cs.stroke, parts[i]));
   const fillAt = fills.findIndex((f) => drawioColor(f).color !== "none");

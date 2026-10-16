@@ -67,7 +67,8 @@ function inlineHtml(el: Element): string {
   return out;
 }
 
-function textLabel(text: SVGTextElement, root: SVGSVGElement): Label | undefined {
+/** An SVG `<text>` label. */
+export function textLabel(text: SVGTextElement, root: SVGSVGElement): Label | undefined {
   // Mermaid writes one <tspan class="row"> per line (its own text wrapping).
   const rows = text.querySelectorAll("tspan.row");
   const lines = rows.length ? Array.from(rows, (r) => r.textContent ?? "") : [text.textContent ?? ""];

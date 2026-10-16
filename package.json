@@ -2,7 +2,7 @@
   "name": "mermaid-drawio",
   "version": "0.1.0",
   "private": true,
-  "description": "Convert a rendered Mermaid flowchart or state diagram SVG into an editable draw.io diagram, keeping Mermaid's layout and styling.",
+  "description": "Convert a rendered Mermaid flowchart, state, ER or class diagram SVG into an editable draw.io diagram, keeping Mermaid's layout and styling.",
   "license": "MIT",
   "type": "module",
   "main": "./src/index.ts",

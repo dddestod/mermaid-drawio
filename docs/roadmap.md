@@ -1,14 +1,14 @@
 # Roadmap
 
-Status: a plan, not a commitment. Updated 2026-10-16.
+Status: a plan, not a commitment. Updated 2026-10-17.
 
 The goal stays the same for every new diagram type: turn the SVG Mermaid
 actually rendered into an editable draw.io diagram that looks like it, with
 labels that move with their boxes and edges that stay attached. Editing happens
 in draw.io; this project doesn't try to round-trip edits back to Mermaid.
 
-Today flowcharts and state diagrams are supported (`UnsupportedDiagramError`
-for the rest).
+Today flowcharts, state, ER and class diagrams are supported
+(`UnsupportedDiagramError` for the rest).
 
 ## Why this order
 
@@ -49,14 +49,16 @@ unchanged, and `npm test` and `npm run check` pass.
 their containment, transition directions and labels, and moving a state in
 draw.io keeps its transitions attached.
 
-## Step 2: ER, then class
+## Step 2: ER, then class (done)
 
 Both put rows inside a box (attributes; members and methods) and both rely on
 edge-end markers, so they share most of the new code.
 
-- **Rows.** Decide once, for both: one HTML label per box, or draw.io's
-  table/stacked cells (each row editable on its own). Start with the HTML
-  label, the simplest faithful option, and record the choice in the README.
+- **Rows.** Decided 2026-10-17: one HTML label per box, for both
+  (`src/compartments.ts`), recorded in the README. It matches Mermaid's look
+  most closely and keeps each box one cell. draw.io's table/row cells (each
+  row its own cell, which draw.io's own Mermaid import uses for ER) would make
+  row-by-row editing easier, so revisit if that's what people need.
 - **Markers.** draw.io has matching built-in ends: `ERmandOne`, `ERmany`,
   `ERone`, `ERoneToMany`, `ERzeroToOne`, `ERzeroToMany` for ER; block (inheritance,
   realization), diamond (composition), open diamond (aggregation) and open

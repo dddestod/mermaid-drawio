@@ -42,6 +42,25 @@ are containers. The layout is what differs, more than for flowcharts:
 - Notes don't wrap (one long line), and `classDef` colours come through but in
   its own theme's font and sizes.
 
+For ER diagrams (`fixtures/er-schema.mmd`) its import is close: each entity
+is a draw.io table (`shape=table`, a `tableRow` per attribute, a cell per
+column), so rows can be edited one by one, with the ER ends (`ERmandOne`,
+`ERzeroToMany`…) and a layout near Mermaid's. What differs:
+
+- Its own font (Trebuchet MS) and sizes, so boxes and positions shift a little.
+- Relationships are `curved=1` and attach at different points: `places` meets
+  CUSTOMER at its top corner, `contains` meets LINE-ITEM at its header.
+
+For class diagrams (`fixtures/class-features.mmd`) classes are swimlanes with
+text rows and lines, and namespaces and notes come through, but:
+
+- The layout is redone: the namespace, notes and `Empty` end up elsewhere, and
+  the note link crosses the diagram.
+- Static members are written with a literal `$` (`+area()$ double`) rather
+  than underlined.
+- It applied `class Color:::warm`, which Mermaid 12.2 itself doesn't render, so
+  the colours differ from what the user saw.
+
 ## mmd2pptx (github.com/LJAYi/mmd2pptx, `@mmd2pptx/core` 0.2.4, Apache-2.0)
 
 The closest prior art: it parses Mermaid's rendered SVG into an IR and exports

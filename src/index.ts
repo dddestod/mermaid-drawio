@@ -1,11 +1,13 @@
 /**
- * Mermaid flowchart or state diagram (as Mermaid rendered it) → editable draw.io diagram.
+ * Mermaid flowchart, state, ER or class diagram (as Mermaid rendered it) → editable draw.io diagram.
  *
  * Reads the SVG Mermaid already drew, so positions, sizes, colours and labels
  * are what the user saw, not a fresh layout. Pinned to the SVG structure of
  * Mermaid 12.2 (see fixtures/).
  */
+import { classDiagram } from "./classDiagram.ts";
 import { serialize } from "./drawio.ts";
+import { er } from "./er.ts";
 import { flowchart } from "./flowchart.ts";
 import { readDiagram, type Dialect } from "./renderer.ts";
 import { state } from "./state.ts";
@@ -68,7 +70,9 @@ function dialectFor(svg: SVGSVGElement): Dialect {
   const type = svg.getAttribute("aria-roledescription") ?? "";
   if (/^flowchart/.test(type) || svg.classList.contains("flowchart")) return flowchart;
   if (type === "stateDiagram") return state;
-  throw new UnsupportedDiagramError(`Only flowcharts and state diagrams are supported (this is "${type || "unknown"}").`);
+  if (type === "er") return er;
+  if (type === "classDiagram") return classDiagram;
+  throw new UnsupportedDiagramError(`Only flowcharts, state, ER and class diagrams are supported (this is "${type || "unknown"}").`);
 }
 
 function indent(s: string, n: number): string {

@@ -1,0 +1,18 @@
+---
+config:
+  layout: dagre
+---
+erDiagram
+  CUSTOMER ||--o{ ORDER : places
+  ORDER ||--|{ LINE-ITEM : contains
+  CUSTOMER {
+    string id PK
+    string name
+  }
+  ORDER {
+    int id PK
+    date placed
+  }
+  LINE-ITEM {
+    int quantity
+  }

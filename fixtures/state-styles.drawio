@@ -69,10 +69,10 @@
         <mxCell id="node-Accepted" value="Accepted" style="rounded=1;absoluteArcSize=1;arcSize=10;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#131300;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
           <mxGeometry x="8" y="561" width="136" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="node-Rejected----note" value="&lt;div style=&quot;line-height: 1.5&quot;&gt;Shown to the user,&lt;br&gt;with the reason&lt;/div&gt;" style="rounded=0;fillColor=#FFF5AD;strokeColor=#9370DB;strokeWidth=1;html=1;whiteSpace=wrap;fontColor=#000000;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=15;spacingRight=15;" vertex="1" parent="1">
+        <mxCell id="node-Rejected----note" value="&lt;div style=&quot;line-height: 1.5&quot;&gt;Shown to the user,&lt;br&gt;with the reason&lt;/div&gt;" style="rounded=0;fillColor=#FFF5AD;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#000000;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=15;spacingRight=15;" vertex="1" parent="1">
           <mxGeometry x="291.04" y="385" width="150" height="102" as="geometry" />
         </mxCell>
-        <mxCell id="node-root_end" value="" style="ellipse;centerRadius=2.5;centerColor=#9370DB;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+        <mxCell id="node-root_end" value="" style="ellipse;centerRadius=2.5;centerColor=#9370DB;fillColor=#ECECFF;strokeColor=#9370DB;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;" vertex="1" parent="1">
           <mxGeometry x="69" y="641" width="14" height="14" as="geometry" />
         </mxCell>
       </root>

@@ -279,7 +279,27 @@ test("beautify --preserve-colors retains explicit node and edge colors", async (
   }
 });
 
-test("both modes reject non-flowcharts, and beautify rejects unknown palette IDs", async () => {
+test("faithful converts state, ER and class diagrams; beautify refuses them", async () => {
+  const page = await pageWithConverter();
+  try {
+    for (const source of [
+      "stateDiagram-v2\n [*] --> Idle\n Idle --> [*]",
+      "erDiagram\n A ||--o{ B : has\n A {\n string id PK\n }",
+      "classDiagram\n Animal <|-- Dog\n class Animal {\n +name\n }",
+    ]) {
+      const result = await page.evaluate(convertInBrowser, { code: source, mode: "faithful" });
+      assert.match(result.raw, /<mxGraphModel/);
+      await assert.rejects(
+        page.evaluate(convertInBrowser, { code: source, mode: "beautify" }),
+        /faithful mode/,
+      );
+    }
+  } finally {
+    await page.close();
+  }
+});
+
+test("both modes reject unsupported diagram types, and beautify rejects unknown palette IDs", async () => {
   const page = await pageWithConverter();
   try {
     for (const mode of ["faithful", "beautify"]) {

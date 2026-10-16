@@ -45,6 +45,19 @@ export function serialize(diagram: Diagram, options: { background?: string }): s
     }
     if (offset && (Math.abs(offset.x) > 0.01 || Math.abs(offset.y) > 0.01)) out.push(`    <mxPoint x="${num(offset.x)}" y="${num(offset.y)}" as="offset" />`);
     out.push(`  </mxGeometry>`, `</mxCell>`);
+    // Labels at the ends: children of the edge, so they move with it.
+    for (const [i, t] of (e.terminals ?? []).entries()) {
+      const end = t.end === "source" ? route[0] : route[route.length - 1];
+      const c = center(t.label.box);
+      const style = styleString([["edgeLabel", null], ["html", 1], ["resizable", 0], ["align", "center"], ["verticalAlign", "middle"], ...t.label.style, ["labelBackgroundColor", "none"]]);
+      out.push(
+        `<mxCell id="${escapeXml(`${e.cellId}-${t.end}${i ? `-${i + 1}` : ""}`)}" value="${escapeXml(value(t.label))}" style="${escapeXml(style)}" vertex="1" connectable="0" parent="${escapeXml(e.cellId)}">`,
+        `  <mxGeometry x="${t.end === "source" ? -1 : 1}" relative="1" as="geometry">`,
+        `    <mxPoint x="${num(c.x - end.x)}" y="${num(c.y - end.y)}" as="offset" />`,
+        `  </mxGeometry>`,
+        `</mxCell>`,
+      );
+    }
   };
 
   // Per parent: subgraphs (each followed by its contents), then edges, then nodes,

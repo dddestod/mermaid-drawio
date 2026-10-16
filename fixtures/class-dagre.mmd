@@ -1,0 +1,14 @@
+---
+config:
+  layout: dagre
+---
+classDiagram
+  class Animal {
+    +String name
+    +speak() String
+  }
+  class Dog
+  class Cat
+  Animal <|-- Dog
+  Animal <|-- Cat
+  Dog "1" o-- "0..*" Cat : chases

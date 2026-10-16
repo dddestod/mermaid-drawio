@@ -1,6 +1,6 @@
 # mermaid-drawio
 
-Converts a Mermaid flowchart's or state diagram's **rendered SVG** into draw.io XML, keeping
+Converts a Mermaid flowchart, state, ER or class diagram's **rendered SVG** into draw.io XML, keeping
 Mermaid's layout and styling. See README.md for the API and known differences,
 and docs/research.md for why this exists (draw.io's own Mermaid import re-renders
 with its own Mermaid, font and theme).
@@ -8,11 +8,14 @@ with its own Mermaid, font and theme).
 ## Layout
 
 - `src/index.ts`: API (`toDrawio`, `toMxGraphModel`, `svgStringToDrawio`), and the
-  diagram type from `aria-roledescription` (flowcharts and state diagrams; others throw).
+  diagram type from `aria-roledescription` (flowcharts, state, ER and class diagrams; others throw).
 - `src/renderer.ts`: reader for Mermaid's shared renderer (flowchart, state, class,
   ER): nodes, clusters, edges (`data-points`), edge labels. Per-type id spellings and
   markers come from a `Dialect`; `src/flowchart.ts` is the flowchart one,
-  `src/state.ts` the state one (composite states are swimlane containers).
+  `src/state.ts` the state one (composite states are swimlane containers),
+  `src/er.ts` and `src/classDiagram.ts` the ER and class ones.
+- `src/compartments.ts`: boxes with rows (ER attributes, class members) as one cell
+  whose label lays the rows out (HTML table for ER columns, sections for classes).
 - `src/drawio.ts`: the read diagram → `<mxGraphModel>` XML.
 - `src/shapes.ts`: which draw.io shape a node outline is (from geometry; the SVG
   doesn't name shapes). Falls back to `mxgraph.basic.polygon`.

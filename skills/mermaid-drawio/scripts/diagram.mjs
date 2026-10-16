@@ -356,6 +356,12 @@ export async function convertInBrowser({
   });
   await document.fonts.ready;
   const { svg } = await mermaid.render("diagram", code);
+  // The converter takes state, ER and class diagrams too; beautify styles flowcharts only.
+  const type = /aria-roledescription="([^"]*)"/.exec(svg)?.[1] ?? "";
+  if (mode === "beautify" && !/^flowchart/.test(type))
+    throw new Error(
+      `Beautify mode supports flowcharts only; convert this ${type} diagram in faithful mode.`,
+    );
   const raw = MermaidDrawio.svgStringToDrawio(
     svg,
     mode === "beautify"

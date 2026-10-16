@@ -1,0 +1,31 @@
+---
+title: Shapes
+---
+classDiagram
+  direction LR
+  namespace Geometry {
+    class Shape {
+      <<interface>>
+      +area()$ double
+      +draw()*
+    }
+    class Square~T~ {
+      -List~T~ points
+      +String name$
+      #side double
+      ~internal()
+    }
+  }
+  class Empty
+  class Color {
+    <<enumeration>>
+    RED
+    GREEN
+  }
+  Shape <|.. Square
+  Square --> Color : fill
+  note for Square "Corners are\nalways square"
+  note "A general note"
+  style Empty fill:#fee2e2,stroke:#b91c1c,stroke-width:2px
+  classDef warm fill:#fef3c7,stroke:#b45309
+  class Color:::warm
