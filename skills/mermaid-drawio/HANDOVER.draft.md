@@ -23,10 +23,13 @@ capabilities, not prerequisites or advertised features. The draft also records
 the ELK spacing limitation, limited scope of the helper's structural check, and
 the need for final Draw.io desktop previews after manual edits.
 
-Before activation, review the draft and exercise representative new-diagram and
-fixed-geometry requests, ideally including meaningful source colors and a
-manually edited file. Multi-page/compressed files need particular care because
-the helper has no page-selection or decoding/editing workflow. No helper fixes
-are bundled with this rewrite. Activation and any metadata alignment are a
-separate step: the installed junction points at this folder, so replacing
-SKILL.md would take effect immediately. Both files remain drafts.
+The user authorized promoting the draft to SKILL.md on
+`codex/beautification-skill-draft`. The installed junction exposes that definition
+while this branch is checked out. SKILL.draft.md remains as the review artifact;
+the active definition omits its draft-only notice. No helper fixes are bundled
+with this promotion.
+
+Frontmatter and local links were validated; representative new-diagram and
+fixed-geometry requests remain useful behavioral checks, particularly meaningful
+source colors and manually edited files. Multi-page/compressed files need care
+because the helper has no page-selection or decoding/editing workflow.
