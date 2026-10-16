@@ -4,8 +4,8 @@ Turn a Mermaid flowchart into an editable draw.io diagram **that looks like the
 one Mermaid drew**: same positions, sizes, shapes, colours, subgraphs, edge
 routes and labels.
 
-draw.io can import Mermaid itself, but it renders the source again with its
-own copy of Mermaid, its own font and theme, and without HTML labels, so the
+draw.io can import Mermaid itself, but it lays the source out again with its
+own Mermaid build, its own font and theme, and without HTML labels, so the
 result is laid out differently from what you saw (see
 [docs/research.md](docs/research.md)). This library reads the SVG Mermaid has
 already rendered instead.
@@ -74,6 +74,17 @@ look at the diffs.
 
 I wrote this for my own use and share it as-is. Bug reports are welcome. I may be slow to reply or may not reply at all.
 Pull requests are currently disabled. If you need a change, feel free to fork it.
+
+See the [proposed roadmap](docs/roadmap.md) for diagram-type expansion priorities
+and validation criteria. It is a proposal, not a release commitment.
+
+## Agent skill
+
+The [Mermaid to Draw.io skill](skills/mermaid-drawio/README.md) creates editable
+diagrams and PNG previews using this checkout and Draw.io desktop. Conversion
+is faithful by default; beautification is an explicit mode. See the
+[setup guide](skills/mermaid-drawio/SETUP.md) for installation, dependencies,
+usage and platform support.
 
 ## Development
 

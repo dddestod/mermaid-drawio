@@ -1,0 +1,12 @@
+flowchart TB
+  subgraph Request[Request]
+    A([Submit request]) --> B{Input valid?}
+    B -->|Yes| C[Queue job]
+    B -->|No| D[Show issues]
+    D -.->|Correct and retry| A
+  end
+  subgraph Processing[Processing]
+    C --> E[[Process job]]
+    E <--> F[(Reference database)]
+    E --> G([Report ready])
+  end

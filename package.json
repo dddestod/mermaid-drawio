@@ -13,12 +13,15 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest run",
+    "test:skill": "node --test test/skill.test.mjs",
+    "test:skill:export": "node --test test/skill-export.test.mjs",
     "check": "tsc --noEmit",
     "fixtures": "node scripts/render-fixtures.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",
     "@vitest/browser": "^3.2.7",
+    "esbuild": "^0.25.12",
     "jsdom": "^26.1.0",
     "mermaid": "12.2.0",
     "playwright": "^1.64.1",

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mermaid to Draw.io"
+  short_description: "Convert faithfully or beautify, with editable files and PNGs"
+  default_prompt: "Use $mermaid-drawio to convert this flowchart faithfully into editable Draw.io and show a PNG preview; beautify only if I request it."

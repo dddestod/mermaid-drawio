@@ -8,15 +8,16 @@ two come close in different ways.
 
 `draw.io.exe -x -f xml -o out.drawio in.mmd`, or Arrange > Insert > Mermaid.
 
-Current draw.io no longer lays a Mermaid diagram out with its own engine. It runs its **own bundled copy of Mermaid**
-(`js/mermaid/drawio-mermaid.min.js`) and turns that layout into native cells,
-honouring `layout: elk` in frontmatter, with `mermaidId` attributes,
-`curved=1` edges with waypoints, `exitX/entryX` ports, and `classDef`/`style`
-colours.
+Draw.io lays the diagram out with its **own Mermaid build**
+(`js/mermaid/drawio-mermaid.min.js`, a jgraph `drawio-mermaid` module per the
+app's changelog), not with the Mermaid that rendered the user's diagram. It
+regenerates the diagram from source and produces native cells, honouring
+`layout: elk` in frontmatter, with `mermaidId` attributes, `curved=1` edges
+with waypoints, `exitX/entryX` ports, and `classDef`/`style` colours.
 
 But it is not *the* rendered layout the user saw:
 
-- Different Mermaid version and look (classic, not Mermaid 12's `neo`), and its
+- Different Mermaid build and look (classic, not Mermaid 12's `neo`), and its
   own font (Trebuchet MS) and theme (`light-dark(#ECECFF,…)`), so node sizes
   differ and every position after them shifts. Example from
   `fixtures/basic.mmd`: "Start" is 95×54 in draw.io, 152×48 in Mermaid 12.2;
