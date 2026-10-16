@@ -1,0 +1,36 @@
+name: Wrong or missing output
+description: A flowchart that converts differently from how Mermaid drew it.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. This is maintained as-is, so replies may be slow
+        or may not come. A diagram that reproduces the problem is the most
+        useful thing you can send. Check "Known differences" in the README first.
+  - type: textarea
+    id: source
+    attributes:
+      label: Mermaid source
+      description: The smallest `.mmd` that shows the problem, including any `%%{init}%%` config.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: difference
+    attributes:
+      label: What's different
+      description: What Mermaid drew vs. what draw.io shows. Screenshots of both help most.
+    validations:
+      required: true
+  - type: input
+    id: mermaid-version
+    attributes:
+      label: Mermaid version
+      description: The version that rendered the SVG. Tested against 12.2.0.
+    validations:
+      required: true
+  - type: input
+    id: viewer
+    attributes:
+      label: Where you looked at the result
+      description: e.g. draw.io desktop 29.x, app.diagrams.net, the dev page

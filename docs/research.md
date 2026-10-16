@@ -8,8 +8,7 @@ two come close in different ways.
 
 `draw.io.exe -x -f xml -o out.drawio in.mmd`, or Arrange > Insert > Mermaid.
 
-Better than its reputation: current draw.io no longer lays a Mermaid diagram
-out with its own engine. It runs its **own bundled copy of Mermaid**
+Current draw.io no longer lays a Mermaid diagram out with its own engine. It runs its **own bundled copy of Mermaid**
 (`js/mermaid/drawio-mermaid.min.js`) and turns that layout into native cells,
 honouring `layout: elk` in frontmatter, with `mermaidId` attributes,
 `curved=1` edges with waypoints, `exitX/entryX` ports, and `classDef`/`style`
@@ -23,11 +22,11 @@ But it is not *the* rendered layout the user saw:
   `fixtures/basic.mmd`: "Start" is 95×54 in draw.io, 152×48 in Mermaid 12.2;
   the cylinder 80×67 vs 144×88.
 - HTML labels are switched off (`htmlLabels=!1`), so formatting in labels is lost.
-- The host app's theme (Margin's page font, dark theme, export colours) is not
+- The host app's theme (its page font, dark theme, export colours) is not
   known to draw.io at all; it only gets the `.mmd` text.
 
-So "Open in draw.io" in Margin gives a diagram with the same structure and a
-similar shape, but a visibly different one.
+So an app's "Open in draw.io" button, sending the `.mmd`, gives a diagram with
+the same structure and a similar shape, but a visibly different one.
 
 ## mmd2pptx (github.com/LJAYi/mmd2pptx, `@mmd2pptx/core` 0.2.4, Apache-2.0)
 
@@ -41,9 +40,9 @@ subgraphs as containers and waypoints. Not a good base for this, though:
 - Plain text only (no HTML labels); curves are flattened to straight
   waypoints (`rounded=0`).
 - Targets Mermaid 11.16; Mermaid 12 changed the SVG (neo look, `data-points`).
-- PowerPoint is the product (pptxgenjs, jszip, a web app, a GitHub broker);
-  single maintainer, 0 stars, pre-1.0. Fixing the label model would mean
-  changing its IR, which is a redesign rather than a contribution.
+- PowerPoint is the product (pptxgenjs, jszip, a web app, a GitHub broker), and
+  it's pre-1.0. Fixing the label model would mean changing its IR, which is a
+  redesign rather than a contribution.
 
 Useful as a reference for shape mapping and endpoint resolution.
 

@@ -70,6 +70,11 @@ This reads Mermaid's SVG, which isn't a stable format. Tested against
 converter expects. When upgrading Mermaid: `npm run fixtures`, `npm test`, and
 look at the diffs.
 
+## Status and support
+
+I wrote this for my own use and share it as-is. Bug reports are welcome. I may be slow to reply or may not reply at all.
+Pull requests are currently disabled. If you need a change, feel free to fork it.
+
 ## Development
 
 ```bash
