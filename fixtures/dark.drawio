@@ -4,17 +4,17 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="cluster-Editor" value="Editor" style="rounded=0;container=1;collapsible=0;recursiveResize=0;fillColor=#474949;strokeColor=none;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#F9FFFE;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=79.1;spacingRight=79.1;verticalAlign=top;spacingTop=0;" vertex="1" parent="1">
+        <mxCell id="cluster-Editor" value="Editor" style="rounded=0;container=1;collapsible=0;recursiveResize=0;fillColor=#474949;strokeColor=#CCCCCC;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#F9FFFE;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=79.1;spacingRight=79.1;verticalAlign=top;spacingTop=0;" vertex="1" parent="1">
           <mxGeometry x="8" y="384" width="200" height="215.56" as="geometry" />
         </mxCell>
         <mxCell id="edge-L_C_E_0" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#D3D3D3;strokeWidth=1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="cluster-Editor" source="node-C" target="node-E">
           <mxGeometry relative="1" as="geometry">
           </mxGeometry>
         </mxCell>
-        <mxCell id="node-C" value="Open in draw.io" style="rounded=0;fillColor=#1F2020;strokeColor=none;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#CCCCCC;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="cluster-Editor">
+        <mxCell id="node-C" value="Open in draw.io" style="rounded=0;fillColor=#1F2020;strokeColor=#CCCCCC;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#CCCCCC;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="cluster-Editor">
           <mxGeometry x="24" y="51" width="152" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="node-E" value="Edit" style="ellipse;fillColor=#1F2020;strokeColor=none;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#CCCCCC;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=20.49;spacingRight=20.49;" vertex="1" parent="cluster-Editor">
+        <mxCell id="node-E" value="Edit" style="ellipse;fillColor=#1F2020;strokeColor=#CCCCCC;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#CCCCCC;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=20.49;spacingRight=20.49;" vertex="1" parent="cluster-Editor">
           <mxGeometry x="65.72" y="123" width="68.56" height="68.56" as="geometry" />
         </mxCell>
         <mxCell id="edge-L_A_B_0" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#D3D3D3;strokeWidth=1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.4971;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-A" target="node-B">
@@ -39,13 +39,13 @@
             <mxPoint x="-0.1" y="0" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="node-A" value="Write notes" style="rounded=0;fillColor=#1F2020;strokeColor=none;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#CCCCCC;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="1">
+        <mxCell id="node-A" value="Write notes" style="rounded=0;fillColor=#1F2020;strokeColor=#CCCCCC;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#CCCCCC;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="1">
           <mxGeometry x="138" y="8" width="152" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="node-B" value="Diagram?" style="rhombus;fillColor=#1F2020;strokeColor=none;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#CCCCCC;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=27;spacingRight=27;" vertex="1" parent="1">
+        <mxCell id="node-B" value="Diagram?" style="rhombus;fillColor=#1F2020;strokeColor=#CCCCCC;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#CCCCCC;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=27;spacingRight=27;" vertex="1" parent="1">
           <mxGeometry x="127.5" y="96" width="174" height="174" as="geometry" />
         </mxCell>
-        <mxCell id="node-D" value="Save" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=13.38;fillColor=#1F2020;strokeColor=none;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#CCCCCC;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=12;spacingRight=12;" vertex="1" parent="1">
+        <mxCell id="node-D" value="Save" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=13.38;fillColor=#1F2020;strokeColor=#CCCCCC;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#CCCCCC;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=12;spacingRight=12;" vertex="1" parent="1">
           <mxGeometry x="248" y="384" width="144" height="88.15" as="geometry" />
         </mxCell>
       </root>

@@ -1,0 +1,54 @@
+<mxfile host="mermaid-drawio">
+  <diagram id="mermaid" name="Page-1">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cluster-Editor" value="Editor" style="rounded=0;container=1;collapsible=0;recursiveResize=0;fillColor=#F8FAFC;strokeColor=#64748B;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#000000;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=125.38;spacingRight=125.38;verticalAlign=top;spacingTop=0;" vertex="1" parent="1">
+          <mxGeometry x="488.91" y="8" width="292.56" height="143.56" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-L_C_E_0" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#475569;strokeWidth=1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="cluster-Editor" source="node-C" target="node-E">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="node-C" value="Open in draw.io" style="rounded=0;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="cluster-Editor">
+          <mxGeometry x="24" y="61.28" width="152" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="node-E" value="Edit" style="ellipse;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=20.49;spacingRight=20.49;" vertex="1" parent="cluster-Editor">
+          <mxGeometry x="200" y="51" width="68.56" height="68.56" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-L_A_B_0" value="" style="edgeStyle=none;rounded=0;html=1;strokeColor=#475569;strokeWidth=1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.0029;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="node-A" target="node-B">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-L_B_C_0" value="yes" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#475569;strokeWidth=1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.8496;exitY=0.3525;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="node-B" target="node-C">
+          <mxGeometry x="0.177" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="394" y="138.79" />
+              <mxPoint x="394" y="93.28" />
+            </Array>
+            <mxPoint x="0" y="-0.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-L_B_D_0" value="no" style="edgeStyle=none;rounded=1;arcSize=10;html=1;strokeColor=#475569;strokeWidth=1;startArrow=none;endArrow=block;endFill=1;endSize=8;exitX=0.8496;exitY=0.6475;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="node-B" target="node-D">
+          <mxGeometry x="0.3288" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="394" y="190.12" />
+              <mxPoint x="394" y="235.63" />
+            </Array>
+            <mxPoint x="0" y="-0.5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="node-A" value="Write notes" style="rounded=0;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=16;spacingRight=16;" vertex="1" parent="1">
+          <mxGeometry x="8" y="140.46" width="152" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="node-B" value="Diagram?" style="rhombus;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=27;spacingRight=27;" vertex="1" parent="1">
+          <mxGeometry x="200.5" y="77.46" width="174" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="node-D" value="Save" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=13.38;fillColor=#FFFFFF;strokeColor=#64748B;strokeWidth=1;shadow=1;html=1;whiteSpace=wrap;fontColor=#333333;fontFamily=Arial,Helvetica,sans-serif;fontSize=16;spacing=0;spacingLeft=12;spacingRight=12;" vertex="1" parent="1">
+          <mxGeometry x="488.91" y="191.56" width="144" height="88.15" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

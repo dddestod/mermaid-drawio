@@ -21,7 +21,7 @@ import {
 } from "./geometry.ts";
 import { readLabel, type Label } from "./labels.ts";
 import { classifyShape } from "./shapes.ts";
-import { dashPattern, drawioColor, escapeXml, num, px, styleString, type Style } from "./style.ts";
+import { dashPattern, drawioColor, escapeXml, num, px, resolvePaint, styleString, type Style } from "./style.ts";
 
 export interface ToDrawioOptions {
   /** The draw.io page's name. Default "Page-1". */
@@ -296,7 +296,7 @@ function edgeStyle(path: SVGPathElement, points: Point[], source: Vertex | undef
   if (rounded) style.push(["arcSize", 10]);
   style.push(["html", 1]);
   const width = px(cs.strokeWidth, 1);
-  const stroke = drawioColor(cs.stroke);
+  const stroke = drawioColor(resolvePaint(cs.stroke, path));
   const invisible = width === 0 || path.classList.contains("edge-thickness-invisible");
   style.push(["strokeColor", invisible ? "none" : stroke.color], ["strokeWidth", invisible ? 1 : width]);
   if (stroke.opacity !== undefined) style.push(["opacity", stroke.opacity]);
@@ -335,10 +335,13 @@ const num4 = (n: number) => String(Math.round(n * 10000) / 10000);
 /** Fill, stroke and shadow from the painted parts of a shape. */
 function shapeColours(parts: SVGGraphicsElement[]): Style {
   const styles = parts.map((p) => getComputedStyle(p));
-  const fillCs = styles.find((cs) => drawioColor(cs.fill).color !== "none");
-  const strokeCs = styles.find((cs) => drawioColor(cs.stroke).color !== "none" && px(cs.strokeWidth, 1) > 0);
-  const fill = drawioColor(fillCs?.fill);
-  const stroke = drawioColor(strokeCs?.stroke);
+  const fills = styles.map((cs, i) => resolvePaint(cs.fill, parts[i]));
+  const strokes = styles.map((cs, i) => resolvePaint(cs.stroke, parts[i]));
+  const fillAt = fills.findIndex((f) => drawioColor(f).color !== "none");
+  const strokeAt = strokes.findIndex((s, i) => drawioColor(s).color !== "none" && px(styles[i].strokeWidth, 1) > 0);
+  const strokeCs = styles[strokeAt] as CSSStyleDeclaration | undefined;
+  const fill = drawioColor(fills[fillAt]);
+  const stroke = drawioColor(strokes[strokeAt]);
   const style: Style = [["fillColor", fill.color]];
   if (fill.opacity !== undefined) style.push(["fillOpacity", fill.opacity]);
   style.push(["strokeColor", stroke.color], ["strokeWidth", strokeCs ? px(strokeCs.strokeWidth, 1) : 1]);

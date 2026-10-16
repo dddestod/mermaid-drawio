@@ -1,0 +1,16 @@
+---
+config:
+  theme: base
+  themeVariables:
+    primaryColor: "#ffffff"
+    primaryBorderColor: "#64748b"
+    clusterBkg: "#f8fafc"
+    lineColor: "#475569"
+---
+flowchart LR
+  A[Write notes] --> B{Diagram?}
+  B -->|yes| C[Open in draw.io]
+  B -->|no| D[(Save)]
+  subgraph Editor
+    C --> E((Edit))
+  end

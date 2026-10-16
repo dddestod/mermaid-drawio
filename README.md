@@ -59,6 +59,8 @@ styles). Not in jsdom.
 - Circle arrowheads sit centred on the node's edge rather than just outside it.
 - Text may wrap at a slightly different point in skewed shapes
   (parallelograms), where draw.io insets the label area itself.
+- Gradient borders (Mermaid 12's base and dark themes) become a solid border
+  in the gradient's start colour (the theme's `primaryBorderColor`).
 - Flowcharts only, for now.
 
 ## Mermaid version

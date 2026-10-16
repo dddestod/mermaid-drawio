@@ -50,6 +50,26 @@ export function drawioColor(value: string | null | undefined): { color: string; 
   return c.a < 1 ? { color: hex(c), opacity: Math.round(c.a * 100) } : { color: hex(c) };
 }
 
+/**
+ * A computed paint (`fill`/`stroke`) as a colour. A paint server reference
+ * (`url(#id)`, e.g. Mermaid 12's gradient borders in its base and dark themes)
+ * becomes the gradient's first stop colour, since draw.io strokes are solid.
+ * Anything else is returned as it is.
+ */
+export function resolvePaint(value: string | null | undefined, el: Element): string | null | undefined {
+  const m = value && /^url\(\s*["']?#([^"')]+)["']?\s*\)/.exec(value.trim());
+  if (!m) return value;
+  const root: ParentNode = (el as SVGElement).ownerSVGElement ?? el.ownerDocument;
+  const server = root.querySelector(`#${CSS.escape(m[1])}`) ?? el.ownerDocument.getElementById(m[1]);
+  const stop = server?.querySelector("stop");
+  if (!stop) return undefined;
+  const cs = getComputedStyle(stop);
+  const c = parseColor(cs.stopColor);
+  if (!c) return undefined;
+  const a = c.a * px(cs.stopOpacity, 1);
+  return a < 1 ? `rgba(${c.r}, ${c.g}, ${c.b}, ${a})` : `rgb(${c.r}, ${c.g}, ${c.b})`;
+}
+
 /** Lay `top` over `bottom` (both may be translucent). */
 export function over(top: Rgba, bottom: Rgba): Rgba {
   const a = top.a + bottom.a * (1 - top.a);
