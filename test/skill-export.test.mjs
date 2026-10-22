@@ -114,6 +114,32 @@ test(
         },
       );
       await t.test(
+        "render-only includes descendants outside root-level container bounds",
+        async () => {
+          const drawio = path.join(temp, "nested-bounds.drawio");
+          const png = path.join(temp, "nested-bounds.png");
+          const xml = `<mxfile><diagram id="page"><mxGraphModel><root>
+            <mxCell id="0"/><mxCell id="1" parent="0"/>
+            <mxCell id="group" value="Container" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;"><mxGeometry x="20" y="20" width="120" height="100" as="geometry"/></mxCell>
+            <mxCell id="child" value="Nested child" vertex="1" parent="group" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;"><mxGeometry x="700" y="500" width="120" height="80" as="geometry"/></mxCell>
+          </root></mxGraphModel></diagram></mxfile>`;
+          await writeFile(drawio, xml);
+          const { stdout } = await cli(helper, [
+            "--render-only",
+            drawio,
+            "--png",
+            png,
+            "--scale",
+            "1",
+          ]);
+          const report = JSON.parse(stdout);
+          assert.ok(report.width >= 900, `unexpected width ${report.width}`);
+          assert.ok(report.height >= 650, `unexpected height ${report.height}`);
+          assert.equal(await readFile(drawio, "utf8"), xml);
+          assert.doesNotMatch(xml, /mermaid_drawio_export_bound/);
+        },
+      );
+      await t.test(
         "relocated source archive and linked skill use the containing checkout",
         async () => {
           const relocated = path.join(temp, "source checkout with spaces");

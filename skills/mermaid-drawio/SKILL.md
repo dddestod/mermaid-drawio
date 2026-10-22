@@ -135,10 +135,14 @@ node "<skill-dir>/scripts/diagram.mjs" --render-only "outputs/diagram.drawio" --
 ```
 
 The helper uses Draw.io desktop and passes `--force-device-scale-factor=1` to
-avoid Windows display-scaling cropping. Keep this workaround for direct desktop
-exports too. The helper exposes no page-selection option; for a multi-page file,
-use desktop export with the appropriate page selection to inspect each changed
-page, retaining all pages in the editable deliverable.
+avoid Windows display-scaling cropping. It also calculates recursive content
+bounds and adds transparent export-only markers to a temporary copy, preventing
+nested cells from being clipped without modifying the delivered `.drawio`. If
+rendered content still reaches an image edge, it expands those bounds and retries.
+Keep the display-scaling workaround for direct desktop exports too. The helper
+exposes no page-selection option; for a multi-page file, use desktop export with
+the appropriate page selection to inspect each changed page, retaining all pages
+in the editable deliverable.
 
 Inspect the complete PNG and dense areas at readable scale. Look for clipping,
 awkward wrapping, obscured internal strokes, ambiguous arrows, label collisions,

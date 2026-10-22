@@ -149,7 +149,10 @@ require Linux system dependencies. Fonts affect wrapping; beautify's default
 stack is Arial, Helvetica, sans-serif. Faithful mode uses Mermaid/source config.
 
 Export always passes `--force-device-scale-factor=1` to prevent PNG cropping
-caused by Windows display scaling, and hides the Windows subprocess window.
+caused by Windows display scaling, and hides the Windows subprocess window. It
+renders from a temporary copy containing transparent markers at the recursively
+calculated content bounds. If rendered pixels still reach an edge, it expands
+the temporary bounds and retries, without changing the editable source file.
 
 From the repository root:
 
@@ -161,9 +164,9 @@ npm run test:skill:export   # full CLI workflow; requires real Draw.io desktop
 ```
 
 The export checks cover both modes, PNG validity, overwrite protection, manual
-XML rerendering and a relocated source checkout with spaces in its path. Inspect
-the generated example PNGs visually as well; automated export success does
-not establish layout quality.
+XML rerendering, nested-cell bounds and a relocated source checkout with spaces
+in its path. Inspect the generated example PNGs visually as well; automated
+export success does not establish layout quality.
 
 ## Distribution and license
 

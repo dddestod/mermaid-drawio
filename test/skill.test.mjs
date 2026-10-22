@@ -5,10 +5,12 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
+import { deflateRawSync, inflateRawSync } from "node:zlib";
 import { build } from "esbuild";
 import { chromium } from "playwright";
 import { JSDOM } from "jsdom";
 import {
+  addExportBoundsToDrawio,
   convertInBrowser,
   resolveRepo,
 } from "../skills/mermaid-drawio/scripts/diagram.mjs";
@@ -100,6 +102,81 @@ function semantics(xml) {
           ].includes(k),
       ),
     }));
+}
+
+test("export bounds include nested cells, edge points and negative coordinates", () => {
+  const page = `<mxGraphModel><root>
+    <mxCell id="0"/><mxCell id="1" parent="0"/>
+    <mxCell id="negative" vertex="1" parent="1"><mxGeometry x="-20" y="-10" width="5" height="5" as="geometry"/></mxCell>
+    <mxCell id="group" vertex="1" parent="1"><mxGeometry x="100" y="50" width="100" height="100" as="geometry"/></mxCell>
+    <mxCell id="child" vertex="1" parent="group"><mxGeometry x="400" y="300" width="80" height="60" as="geometry"/></mxCell>
+    <mxCell id="edge" edge="1" parent="group"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="600" y="500"/></Array></mxGeometry></mxCell>
+  </root></mxGraphModel>`;
+  const uncompressed = `<mxfile><diagram id="page">${page}</diagram></mxfile>`;
+  const result = addExportBoundsToDrawio(uncompressed, JSDOM);
+  assert.equal(uncompressed.includes("export_bound"), false);
+  const doc = new JSDOM(result, { contentType: "application/xml" }).window
+    .document;
+  const markers = Object.fromEntries(
+    [...doc.querySelectorAll('[data-mermaid-drawio-export-bound="1"]')].map(
+      (cell) => [
+        cell.id.includes("_min_") ? "min" : "max",
+        directGeometry(cell),
+      ],
+    ),
+  );
+  assert.deepEqual(markers.min, { x: -52, y: -42 });
+  assert.deepEqual(markers.max, { x: 732, y: 582 });
+  assert.match(
+    doc.querySelector('[data-mermaid-drawio-export-bound="1"]').getAttribute(
+      "style",
+    ),
+    /opacity=0/,
+  );
+  const expanded = new JSDOM(
+    addExportBoundsToDrawio(uncompressed, JSDOM, 1.25),
+    { contentType: "application/xml" },
+  ).window.document;
+  const expandedMarkers = Object.fromEntries(
+    [...expanded.querySelectorAll('[data-mermaid-drawio-export-bound="1"]')].map(
+      (cell) => [
+        cell.id.includes("_min_") ? "min" : "max",
+        directGeometry(cell),
+      ],
+    ),
+  );
+  assert.deepEqual(expandedMarkers.min, { x: -57, y: -45 });
+  assert.deepEqual(expandedMarkers.max, { x: 907, y: 720 });
+
+  const compressedPage = deflateRawSync(
+    Buffer.from(encodeURIComponent(page)),
+  ).toString("base64");
+  const compressed = addExportBoundsToDrawio(
+    `<mxfile><diagram id="page">${compressedPage}</diagram></mxfile>`,
+    JSDOM,
+  );
+  const outer = new JSDOM(compressed, { contentType: "application/xml" })
+    .window.document;
+  const decoded = decodeURIComponent(
+    inflateRawSync(
+      Buffer.from(outer.querySelector("diagram").textContent, "base64"),
+    ).toString("utf8"),
+  );
+  assert.equal(
+    new JSDOM(decoded, { contentType: "application/xml" }).window.document
+      .querySelectorAll('[data-mermaid-drawio-export-bound="1"]').length,
+    2,
+  );
+});
+
+function directGeometry(cell) {
+  const geometry = [...cell.children].find(
+    (child) => child.tagName === "mxGeometry",
+  );
+  return {
+    x: Number(geometry.getAttribute("x")),
+    y: Number(geometry.getAttribute("y")),
+  };
 }
 
 test("discovers a containing source archive without Git, regardless of cwd", async () => {

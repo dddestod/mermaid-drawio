@@ -5,6 +5,7 @@ import os from "node:os";
 import { createRequire } from "node:module";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { deflateRawSync, inflateRawSync, inflateSync } from "node:zlib";
 
 const SKILL_DIR = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
@@ -267,37 +268,299 @@ function run(exe, args, timeout = 90000) {
     });
   });
 }
-async function render(a, input, png, exe) {
+const EXPORT_BOUNDS_PADDING = 32;
+
+function directChild(element, name) {
+  return [...element.children].find((child) => child.tagName === name);
+}
+
+function finite(value, fallback = 0) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
+export function addExportBoundsToModel(model, extentScale = 1) {
+  const root = directChild(model, "root");
+  if (!root) throw new Error("Draw.io page has no mxGraphModel/root element.");
+  for (const old of root.querySelectorAll(
+    'mxCell[data-mermaid-drawio-export-bound="1"]',
+  ))
+    old.remove();
+  const cells = [...root.querySelectorAll("mxCell")];
+  const byId = new Map(cells.map((cell) => [cell.getAttribute("id"), cell]));
+  const origins = new Map();
+  const resolving = new Set();
+  const geometry = (cell) => directChild(cell, "mxGeometry");
+  const origin = (cell) => {
+    if (!cell) return { x: 0, y: 0 };
+    if (origins.has(cell)) return origins.get(cell);
+    if (resolving.has(cell))
+      throw new Error(`Cycle in Draw.io parent hierarchy at ${cell.id}.`);
+    resolving.add(cell);
+    const parent = byId.get(cell.getAttribute("parent"));
+    const base =
+      parent?.getAttribute("vertex") === "1"
+        ? origin(parent)
+        : { x: 0, y: 0 };
+    const g = geometry(cell);
+    let x = base.x,
+      y = base.y;
+    if (g && cell.getAttribute("vertex") === "1") {
+      if (g.getAttribute("relative") === "1" && parent) {
+        const pg = geometry(parent);
+        x += finite(g.getAttribute("x")) * finite(pg?.getAttribute("width"));
+        y += finite(g.getAttribute("y")) * finite(pg?.getAttribute("height"));
+        const offset = [...g.children].find(
+          (child) =>
+            child.tagName === "mxPoint" && child.getAttribute("as") === "offset",
+        );
+        x += finite(offset?.getAttribute("x"));
+        y += finite(offset?.getAttribute("y"));
+      } else {
+        x += finite(g.getAttribute("x"));
+        y += finite(g.getAttribute("y"));
+      }
+    }
+    const result = { x, y };
+    resolving.delete(cell);
+    origins.set(cell, result);
+    return result;
+  };
+  let minX = Infinity,
+    minY = Infinity,
+    maxX = -Infinity,
+    maxY = -Infinity;
+  const include = (x, y) => {
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+    minX = Math.min(minX, x);
+    minY = Math.min(minY, y);
+    maxX = Math.max(maxX, x);
+    maxY = Math.max(maxY, y);
+  };
+  for (const cell of cells) {
+    const g = geometry(cell);
+    if (!g) continue;
+    const base = origin(cell);
+    if (cell.getAttribute("vertex") === "1") {
+      include(base.x, base.y);
+      include(
+        base.x + finite(g.getAttribute("width")),
+        base.y + finite(g.getAttribute("height")),
+      );
+    } else if (cell.getAttribute("edge") === "1") {
+      const parent = byId.get(cell.getAttribute("parent"));
+      const edgeBase =
+        parent?.getAttribute("vertex") === "1" ? origin(parent) : { x: 0, y: 0 };
+      for (const point of g.querySelectorAll(
+        'Array[as="points"] > mxPoint, mxPoint[as="sourcePoint"], mxPoint[as="targetPoint"]',
+      ))
+        include(
+          edgeBase.x + finite(point.getAttribute("x")),
+          edgeBase.y + finite(point.getAttribute("y")),
+        );
+    }
+  }
+  if (![minX, minY, maxX, maxY].every(Number.isFinite)) return undefined;
+  const layer =
+    [...root.children].find(
+      (cell) => cell.tagName === "mxCell" && cell.getAttribute("parent") === "0",
+    )?.getAttribute("id") || "1";
+  const addMarker = (suffix, x, y) => {
+    const cell = model.ownerDocument.createElement("mxCell");
+    cell.setAttribute("id", `__mermaid_drawio_export_bound_${suffix}__`);
+    cell.setAttribute("value", "");
+    cell.setAttribute("vertex", "1");
+    cell.setAttribute("parent", layer);
+    cell.setAttribute("data-mermaid-drawio-export-bound", "1");
+    cell.setAttribute(
+      "style",
+      "shape=rect;fillColor=none;strokeColor=none;opacity=0;",
+    );
+    const g = model.ownerDocument.createElement("mxGeometry");
+    g.setAttribute("x", String(x));
+    g.setAttribute("y", String(y));
+    g.setAttribute("width", "1");
+    g.setAttribute("height", "1");
+    g.setAttribute("as", "geometry");
+    cell.appendChild(g);
+    root.appendChild(cell);
+  };
+  const bounds = {
+    minX: Math.floor(minX * extentScale - EXPORT_BOUNDS_PADDING),
+    minY: Math.floor(minY * extentScale - EXPORT_BOUNDS_PADDING),
+    maxX: Math.ceil(maxX * extentScale + EXPORT_BOUNDS_PADDING),
+    maxY: Math.ceil(maxY * extentScale + EXPORT_BOUNDS_PADDING),
+  };
+  addMarker("min", bounds.minX, bounds.minY);
+  addMarker("max", bounds.maxX, bounds.maxY);
+  return bounds;
+}
+
+export function addExportBoundsToDrawio(xml, JSDOM, extentScale = 1) {
+  const outer = new JSDOM(xml, { contentType: "application/xml" });
+  const diagrams = [
+    ...outer.window.document.querySelectorAll("mxfile > diagram"),
+  ];
+  if (!diagrams.length) throw new Error("Draw.io file has no diagram pages.");
+  for (const diagram of diagrams) {
+    let model = directChild(diagram, "mxGraphModel");
+    if (model) {
+      addExportBoundsToModel(model, extentScale);
+      continue;
+    }
+    const payload = diagram.textContent.trim();
+    if (!payload) throw new Error("Draw.io diagram page is empty.");
+    let pageXml;
+    try {
+      pageXml = decodeURIComponent(
+        inflateRawSync(Buffer.from(payload, "base64")).toString("utf8"),
+      );
+    } catch (error) {
+      throw new Error(`Cannot decode compressed Draw.io page: ${error.message}`);
+    }
+    const page = new JSDOM(pageXml, { contentType: "application/xml" });
+    model = page.window.document.documentElement;
+    if (model.tagName !== "mxGraphModel")
+      throw new Error("Decoded Draw.io page has no mxGraphModel root.");
+    addExportBoundsToModel(model, extentScale);
+    const encoded = encodeURIComponent(
+      page.window.document.documentElement.outerHTML,
+    );
+    diagram.textContent = deflateRawSync(Buffer.from(encoded)).toString("base64");
+  }
+  return outer.serialize();
+}
+
+function pngTouchesEdge(buffer, margin) {
+  const width = buffer.readUInt32BE(16),
+    height = buffer.readUInt32BE(20),
+    bitDepth = buffer[24],
+    colorType = buffer[25],
+    interlace = buffer[28];
+  const bytesPerPixel = { 0: 1, 2: 3, 4: 2, 6: 4 }[colorType];
+  if (bitDepth !== 8 || !bytesPerPixel || interlace !== 0)
+    throw new Error(
+      `Unsupported Draw.io PNG format: depth ${bitDepth}, color type ${colorType}, interlace ${interlace}.`,
+    );
+  const chunks = [];
+  for (let offset = 8; offset + 12 <= buffer.length; ) {
+    const length = buffer.readUInt32BE(offset);
+    const type = buffer.subarray(offset + 4, offset + 8).toString("ascii");
+    if (type === "IDAT")
+      chunks.push(buffer.subarray(offset + 8, offset + 8 + length));
+    offset += length + 12;
+    if (type === "IEND") break;
+  }
+  const packed = inflateSync(Buffer.concat(chunks));
+  const stride = width * bytesPerPixel;
+  if (packed.length !== (stride + 1) * height)
+    throw new Error("Unexpected Draw.io PNG scanline size.");
+  const pixels = Buffer.alloc(stride * height);
+  const paeth = (a, b, c) => {
+    const p = a + b - c,
+      pa = Math.abs(p - a),
+      pb = Math.abs(p - b),
+      pc = Math.abs(p - c);
+    return pa <= pb && pa <= pc ? a : pb <= pc ? b : c;
+  };
+  for (let y = 0; y < height; y++) {
+    const filter = packed[y * (stride + 1)];
+    for (let x = 0; x < stride; x++) {
+      const raw = packed[y * (stride + 1) + x + 1];
+      const left =
+        x >= bytesPerPixel ? pixels[y * stride + x - bytesPerPixel] : 0;
+      const up = y ? pixels[(y - 1) * stride + x] : 0;
+      const upperLeft =
+        y && x >= bytesPerPixel
+          ? pixels[(y - 1) * stride + x - bytesPerPixel]
+          : 0;
+      const value =
+        filter === 0
+          ? raw
+          : filter === 1
+            ? raw + left
+            : filter === 2
+              ? raw + up
+              : filter === 3
+                ? raw + Math.floor((left + up) / 2)
+                : filter === 4
+                  ? raw + paeth(left, up, upperLeft)
+                  : NaN;
+      if (!Number.isFinite(value))
+        throw new Error(`Unknown PNG filter ${filter}.`);
+      pixels[y * stride + x] = value & 255;
+    }
+  }
+  const background = pixels.subarray(0, bytesPerPixel);
+  const differs = (x, y) => {
+    const offset = y * stride + x * bytesPerPixel;
+    for (let channel = 0; channel < bytesPerPixel; channel++)
+      if (pixels[offset + channel] !== background[channel]) return true;
+    return false;
+  };
+  const inset = Math.min(margin, Math.floor(width / 2), Math.floor(height / 2));
+  for (let y = 0; y < height; y++)
+    for (let x = 0; x < inset; x++)
+      if (differs(x, y) || differs(width - 1 - x, y)) return true;
+  for (let y = 0; y < inset; y++)
+    for (let x = inset; x < width - inset; x++)
+      if (differs(x, y) || differs(x, height - 1 - y)) return true;
+  return false;
+}
+
+async function render(a, input, png, exe, repo) {
   const stage = path.join(
     path.dirname(png),
     `.${path.basename(png)}.${process.pid}.${Date.now()}.png`,
   );
+  const exportCopy = stage + ".drawio";
   try {
-    await run(exe, [
-      "--force-device-scale-factor=1",
-      "--export",
-      "--format",
-      "png",
-      "--scale",
-      String(a.scale),
-      "--border",
-      "24",
-      "--output",
-      stage,
-      input,
-    ]);
-    const buf = await fs.readFile(stage);
-    if (
-      buf.subarray(0, 8).toString("hex") !== "89504e470d0a1a0a" ||
-      buf.length < 100
-    )
-      throw new Error("Export produced invalid PNG.");
-    const size = { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
-    if (!size.width || !size.height) throw new Error("Empty PNG dimensions.");
-    await fs.copyFile(stage, png);
-    return size;
+    const req = createRequire(path.join(repo, "package.json"));
+    const { JSDOM } = req("jsdom");
+    const source = await fs.readFile(input, "utf8");
+    let extentScale = 1;
+    for (let attempt = 0; attempt < 5; attempt++) {
+      await fs.writeFile(
+        exportCopy,
+        addExportBoundsToDrawio(source, JSDOM, extentScale),
+        "utf8",
+      );
+      await run(exe, [
+        "--force-device-scale-factor=1",
+        "--export",
+        "--format",
+        "png",
+        "--scale",
+        String(a.scale),
+        "--border",
+        "24",
+        "--output",
+        stage,
+        exportCopy,
+      ]);
+      const buf = await fs.readFile(stage);
+      if (
+        buf.subarray(0, 8).toString("hex") !== "89504e470d0a1a0a" ||
+        buf.length < 100
+      )
+        throw new Error("Export produced invalid PNG.");
+      const size = {
+        width: buf.readUInt32BE(16),
+        height: buf.readUInt32BE(20),
+      };
+      if (!size.width || !size.height) throw new Error("Empty PNG dimensions.");
+      if (!pngTouchesEdge(buf, Math.max(2, Math.ceil(a.scale * 4)))) {
+        await fs.copyFile(stage, png);
+        return size;
+      }
+      extentScale *= 1.25;
+    }
+    throw new Error(
+      "Draw.io export remained clipped after five bounds attempts.",
+    );
   } finally {
     await fs.rm(stage, { force: true });
+    await fs.rm(exportCopy, { force: true });
   }
 }
 
@@ -616,12 +879,19 @@ async function main() {
       throw new Error("PNG output must differ from input XML.");
     if (!(await exists(input))) throw new Error(`Missing diagram: ${input}`);
     await writable([png], a.overwrite);
+    const repo = await resolveRepo(a, local);
     console.log(
       JSON.stringify(
         {
           drawio: input,
           png,
-          ...(await render(a, input, png, await drawioPath(a, local))),
+          ...(await render(
+            a,
+            input,
+            png,
+            await drawioPath(a, local),
+            repo,
+          )),
         },
         null,
         2,
@@ -731,7 +1001,7 @@ async function main() {
     "utf8",
   );
   await fs.writeFile(output.mermaid, code, "utf8");
-  const size = await render(a, output.drawio, output.png, exe);
+  const size = await render(a, output.drawio, output.png, exe, repo);
   const report = {
     ...output,
     ...size,
